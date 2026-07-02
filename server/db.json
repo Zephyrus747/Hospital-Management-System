@@ -1,0 +1,1037 @@
+{
+  "physicians": [
+    {
+      "EmployeeID": 1,
+      "Name": "John Dorian",
+      "Position": "Staff Internist",
+      "SSN": 111111111
+    },
+    {
+      "EmployeeID": 2,
+      "Name": "Elliot Reid",
+      "Position": "Attending Physician",
+      "SSN": 222222222
+    },
+    {
+      "EmployeeID": 3,
+      "Name": "Christopher Turk",
+      "Position": "Surgical Attending Physician",
+      "SSN": 333333333
+    },
+    {
+      "EmployeeID": 4,
+      "Name": "Percival Cox",
+      "Position": "Senior Attending Physician",
+      "SSN": 444444444
+    },
+    {
+      "EmployeeID": 5,
+      "Name": "Bob Kelso",
+      "Position": "Head Chief of Medicine",
+      "SSN": 555555555
+    },
+    {
+      "EmployeeID": 6,
+      "Name": "Todd Quinlan",
+      "Position": "Surgical Attending Physician",
+      "SSN": 666666666
+    },
+    {
+      "EmployeeID": 7,
+      "Name": "John Wen",
+      "Position": "Surgical Attending Physician",
+      "SSN": 777777777
+    },
+    {
+      "EmployeeID": 8,
+      "Name": "Keith Dudemeister",
+      "Position": "MD Resident",
+      "SSN": 888888888
+    },
+    {
+      "EmployeeID": 9,
+      "Name": "Molly Clock",
+      "Position": "Attending Psychiatrist",
+      "SSN": 999999999
+    }
+  ],
+  "departments": [
+    {
+      "DepartmentID": 1,
+      "Name": "General Medicine",
+      "Head": 4
+    },
+    {
+      "DepartmentID": 2,
+      "Name": "Surgery",
+      "Head": 7
+    },
+    {
+      "DepartmentID": 3,
+      "Name": "Psychiatry",
+      "Head": 9
+    }
+  ],
+  "affiliated_with": [
+    {
+      "id": "1-1",
+      "Physician": 1,
+      "Department": 1,
+      "PrimaryAffiliation": 1
+    },
+    {
+      "id": "2-1",
+      "Physician": 2,
+      "Department": 1,
+      "PrimaryAffiliation": 1
+    },
+    {
+      "id": "3-1",
+      "Physician": 3,
+      "Department": 1,
+      "PrimaryAffiliation": 0
+    },
+    {
+      "id": "3-2",
+      "Physician": 3,
+      "Department": 2,
+      "PrimaryAffiliation": 1
+    },
+    {
+      "id": "4-1",
+      "Physician": 4,
+      "Department": 1,
+      "PrimaryAffiliation": 1
+    },
+    {
+      "id": "5-1",
+      "Physician": 5,
+      "Department": 1,
+      "PrimaryAffiliation": 1
+    },
+    {
+      "id": "6-2",
+      "Physician": 6,
+      "Department": 2,
+      "PrimaryAffiliation": 1
+    },
+    {
+      "id": "7-1",
+      "Physician": 7,
+      "Department": 1,
+      "PrimaryAffiliation": 0
+    },
+    {
+      "id": "7-2",
+      "Physician": 7,
+      "Department": 2,
+      "PrimaryAffiliation": 1
+    },
+    {
+      "id": "8-1",
+      "Physician": 8,
+      "Department": 1,
+      "PrimaryAffiliation": 1
+    },
+    {
+      "id": "9-3",
+      "Physician": 9,
+      "Department": 3,
+      "PrimaryAffiliation": 1
+    }
+  ],
+  "procedures": [
+    {
+      "Code": 1,
+      "Name": "Reverse Rhinopodoplasty",
+      "Cost": 1500
+    },
+    {
+      "Code": 2,
+      "Name": "Obtuse Pyloric Recombobulation",
+      "Cost": 3750
+    },
+    {
+      "Code": 3,
+      "Name": "Folded Demiophtalmectomy",
+      "Cost": 4500
+    },
+    {
+      "Code": 4,
+      "Name": "Complete Walletectomy",
+      "Cost": 10000
+    },
+    {
+      "Code": 5,
+      "Name": "Obfuscated Dermogastrotomy",
+      "Cost": 4899
+    },
+    {
+      "Code": 6,
+      "Name": "Reversible Pancreomyoplasty",
+      "Cost": 5600
+    },
+    {
+      "Code": 7,
+      "Name": "Follicular Demiectomy",
+      "Cost": 25
+    }
+  ],
+  "trained_in": [
+    {
+      "id": "3-1",
+      "Physician": 3,
+      "Treatment": 1,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "3-2",
+      "Physician": 3,
+      "Treatment": 2,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "3-5",
+      "Physician": 3,
+      "Treatment": 5,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "3-6",
+      "Physician": 3,
+      "Treatment": 6,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "3-7",
+      "Physician": 3,
+      "Treatment": 7,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "6-2",
+      "Physician": 6,
+      "Treatment": 2,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "6-5",
+      "Physician": 6,
+      "Treatment": 5,
+      "CertificationDate": "2007-01-01",
+      "CertificationExpires": "2007-12-31"
+    },
+    {
+      "id": "6-6",
+      "Physician": 6,
+      "Treatment": 6,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "7-1",
+      "Physician": 7,
+      "Treatment": 1,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "7-2",
+      "Physician": 7,
+      "Treatment": 2,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "7-3",
+      "Physician": 7,
+      "Treatment": 3,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "7-4",
+      "Physician": 7,
+      "Treatment": 4,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "7-5",
+      "Physician": 7,
+      "Treatment": 5,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "7-6",
+      "Physician": 7,
+      "Treatment": 6,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    },
+    {
+      "id": "7-7",
+      "Physician": 7,
+      "Treatment": 7,
+      "CertificationDate": "2008-01-01",
+      "CertificationExpires": "2008-12-31"
+    }
+  ],
+  "patients": [
+    {
+      "SSN": 100000001,
+      "Name": "John Smith",
+      "Address": "42 Foobar Lane",
+      "Phone": "555-0256",
+      "InsuranceID": 68476213,
+      "PCP": 1
+    },
+    {
+      "SSN": 100000002,
+      "Name": "Grace Ritchie",
+      "Address": "37 Snafu Drive",
+      "Phone": "555-0512",
+      "InsuranceID": 36546321,
+      "PCP": 2
+    },
+    {
+      "SSN": 100000003,
+      "Name": "Random J. Patient",
+      "Address": "101 Omgbbq Street",
+      "Phone": "555-1204",
+      "InsuranceID": 65465421,
+      "PCP": 2
+    },
+    {
+      "SSN": 100000004,
+      "Name": "Dennis Doe",
+      "Address": "1100 Foobaz Avenue",
+      "Phone": "555-2048",
+      "InsuranceID": 68421879,
+      "PCP": 3
+    },
+    {
+      "SSN": 100001111000,
+      "Name": "Aditya Kumar",
+      "Address": "Muzaffarpur",
+      "Phone": "7079487670",
+      "InsuranceID": 90,
+      "PCP": 4
+    }
+  ],
+  "nurses": [
+    {
+      "EmployeeID": 101,
+      "Name": "Carla Espinosa",
+      "Position": "Head Nurse",
+      "Registered": 1,
+      "SSN": 111111110
+    },
+    {
+      "EmployeeID": 102,
+      "Name": "Laverne Roberts",
+      "Position": "Nurse",
+      "Registered": 1,
+      "SSN": 222222220
+    },
+    {
+      "EmployeeID": 103,
+      "Name": "Paul Flowers",
+      "Position": "Nurse",
+      "Registered": 0,
+      "SSN": 333333330
+    }
+  ],
+  "appointments": [
+    {
+      "AppointmentID": 13216584,
+      "Patient": 100000001,
+      "PrepNurse": 101,
+      "Physician": 1,
+      "Starto": "2008-04-24 10:00",
+      "Endo": "2008-04-24 11:00",
+      "ExaminationRoom": "A",
+      "VisitType": "OPD"
+    },
+    {
+      "AppointmentID": 26548913,
+      "Patient": 100000002,
+      "PrepNurse": 101,
+      "Physician": 2,
+      "Starto": "2008-04-24 10:00",
+      "Endo": "2008-04-24 11:00",
+      "ExaminationRoom": "B",
+      "VisitType": "OPD"
+    },
+    {
+      "AppointmentID": 36549879,
+      "Patient": 100000001,
+      "PrepNurse": 102,
+      "Physician": 1,
+      "Starto": "2008-04-25 10:00",
+      "Endo": "2008-04-25 11:00",
+      "ExaminationRoom": "A",
+      "VisitType": "OPD"
+    },
+    {
+      "AppointmentID": 46846589,
+      "Patient": 100000004,
+      "PrepNurse": 103,
+      "Physician": 4,
+      "Starto": "2008-04-25 10:00",
+      "Endo": "2008-04-25 11:00",
+      "ExaminationRoom": "B",
+      "VisitType": "Admission"
+    },
+    {
+      "AppointmentID": 59871321,
+      "Patient": 100000004,
+      "PrepNurse": null,
+      "Physician": 4,
+      "Starto": "2008-04-26 10:00",
+      "Endo": "2008-04-26 11:00",
+      "ExaminationRoom": "C",
+      "VisitType": "OPD"
+    },
+    {
+      "AppointmentID": 69879231,
+      "Patient": 100000003,
+      "PrepNurse": 103,
+      "Physician": 2,
+      "Starto": "2008-04-26 11:00",
+      "Endo": "2008-04-26 12:00",
+      "ExaminationRoom": "C",
+      "VisitType": "Admission"
+    },
+    {
+      "AppointmentID": 76983231,
+      "Patient": 100000001,
+      "PrepNurse": null,
+      "Physician": 3,
+      "Starto": "2008-04-26 12:00",
+      "Endo": "2008-04-26 13:00",
+      "ExaminationRoom": "C",
+      "VisitType": "OPD"
+    },
+    {
+      "AppointmentID": 86213939,
+      "Patient": 100000004,
+      "PrepNurse": 102,
+      "Physician": 9,
+      "Starto": "2008-04-27 10:00",
+      "Endo": "2008-04-21 11:00",
+      "ExaminationRoom": "A",
+      "VisitType": "OPD"
+    },
+    {
+      "AppointmentID": 93216548,
+      "Patient": 100000002,
+      "PrepNurse": 101,
+      "Physician": 2,
+      "Starto": "2008-04-27 10:00",
+      "Endo": "2008-04-27 11:00",
+      "ExaminationRoom": "B",
+      "VisitType": "OPD"
+    }
+  ],
+  "medications": [
+    {
+      "Code": 1,
+      "Name": "Procrastin-X",
+      "Brand": "X",
+      "Description": "N/A"
+    },
+    {
+      "Code": 2,
+      "Name": "Thesisin",
+      "Brand": "Foo Labs",
+      "Description": "N/A"
+    },
+    {
+      "Code": 3,
+      "Name": "Awakin",
+      "Brand": "Bar Laboratories",
+      "Description": "N/A"
+    },
+    {
+      "Code": 4,
+      "Name": "Crescavitin",
+      "Brand": "Baz Industries",
+      "Description": "N/A"
+    },
+    {
+      "Code": 5,
+      "Name": "Melioraurin",
+      "Brand": "Snafu Pharmaceuticals",
+      "Description": "N/A"
+    }
+  ],
+  "prescribes": [
+    {
+      "id": "1-100000001-1-2008-04-24",
+      "Physician": 1,
+      "Patient": 100000001,
+      "Medication": 1,
+      "Date": "2008-04-24 10:47",
+      "Appointment": 13216584,
+      "Dose": "5"
+    },
+    {
+      "id": "9-100000004-2-2008-04-27",
+      "Physician": 9,
+      "Patient": 100000004,
+      "Medication": 2,
+      "Date": "2008-04-27 10:53",
+      "Appointment": 86213939,
+      "Dose": "10"
+    },
+    {
+      "id": "9-100000004-2-2008-04-30",
+      "Physician": 9,
+      "Patient": 100000004,
+      "Medication": 2,
+      "Date": "2008-04-30 16:53",
+      "Appointment": null,
+      "Dose": "5"
+    }
+  ],
+  "blocks": [
+    {
+      "id": "1-1",
+      "BlockFloor": 1,
+      "BlockCode": 1
+    },
+    {
+      "id": "1-2",
+      "BlockFloor": 1,
+      "BlockCode": 2
+    },
+    {
+      "id": "1-3",
+      "BlockFloor": 1,
+      "BlockCode": 3
+    },
+    {
+      "id": "2-1",
+      "BlockFloor": 2,
+      "BlockCode": 1
+    },
+    {
+      "id": "2-2",
+      "BlockFloor": 2,
+      "BlockCode": 2
+    },
+    {
+      "id": "2-3",
+      "BlockFloor": 2,
+      "BlockCode": 3
+    },
+    {
+      "id": "3-1",
+      "BlockFloor": 3,
+      "BlockCode": 1
+    },
+    {
+      "id": "3-2",
+      "BlockFloor": 3,
+      "BlockCode": 2
+    },
+    {
+      "id": "3-3",
+      "BlockFloor": 3,
+      "BlockCode": 3
+    },
+    {
+      "id": "4-1",
+      "BlockFloor": 4,
+      "BlockCode": 1
+    },
+    {
+      "id": "4-2",
+      "BlockFloor": 4,
+      "BlockCode": 2
+    },
+    {
+      "id": "4-3",
+      "BlockFloor": 4,
+      "BlockCode": 3
+    }
+  ],
+  "rooms": [
+    {
+      "RoomNumber": 101,
+      "RoomType": "Single",
+      "BlockFloor": 1,
+      "BlockCode": 1,
+      "Unavailable": 0
+    },
+    {
+      "RoomNumber": 102,
+      "RoomType": "Single",
+      "BlockFloor": 1,
+      "BlockCode": 1,
+      "Unavailable": 0
+    },
+    {
+      "RoomNumber": 103,
+      "RoomType": "Single",
+      "BlockFloor": 1,
+      "BlockCode": 1,
+      "Unavailable": 0
+    },
+    {
+      "RoomNumber": 111,
+      "RoomType": "Single",
+      "BlockFloor": 1,
+      "BlockCode": 2,
+      "Unavailable": 0
+    },
+    {
+      "RoomNumber": 112,
+      "RoomType": "Single",
+      "BlockFloor": 1,
+      "BlockCode": 2,
+      "Unavailable": 1
+    },
+    {
+      "RoomNumber": 113,
+      "RoomType": "Single",
+      "BlockFloor": 1,
+      "BlockCode": 2,
+      "Unavailable": 0
+    },
+    {
+      "RoomNumber": 121,
+      "RoomType": "Single",
+      "BlockFloor": 1,
+      "BlockCode": 3,
+      "Unavailable": 0
+    },
+    {
+      "RoomNumber": 122,
+      "RoomType": "Single",
+      "BlockFloor": 1,
+      "BlockCode": 3,
+      "Unavailable": 0
+    },
+    {
+      "RoomNumber": 123,
+      "RoomType": "Single",
+      "BlockFloor": 1,
+      "BlockCode": 3,
+      "Unavailable": 0
+    },
+    {
+      "RoomNumber": 201,
+      "RoomType": "Single",
+      "BlockFloor": 2,
+      "BlockCode": 1,
+      "Unavailable": 1
+    },
+    {
+      "RoomNumber": 202,
+      "RoomType": "Single",
+      "BlockFloor": 2,
+      "BlockCode": 1,
+      "Unavailable": 0
+    },
+    {
+      "RoomNumber": 203,
+      "RoomType": "Single",
+      "BlockFloor": 2,
+      "BlockCode": 1,
+      "Unavailable": 0
+    }
+  ],
+  "on_call": [
+    {
+      "id": "101-1-1-start1",
+      "Nurse": 101,
+      "BlockFloor": 1,
+      "BlockCode": 1,
+      "OnCallStart": "2008-11-04 11:00",
+      "OnCallEnd": "2008-11-04 19:00"
+    },
+    {
+      "id": "101-1-2-start1",
+      "Nurse": 101,
+      "BlockFloor": 1,
+      "BlockCode": 2,
+      "OnCallStart": "2008-11-04 11:00",
+      "OnCallEnd": "2008-11-04 19:00"
+    },
+    {
+      "id": "102-1-3-start1",
+      "Nurse": 102,
+      "BlockFloor": 1,
+      "BlockCode": 3,
+      "OnCallStart": "2008-11-04 11:00",
+      "OnCallEnd": "2008-11-04 19:00"
+    },
+    {
+      "id": "103-1-1-start2",
+      "Nurse": 103,
+      "BlockFloor": 1,
+      "BlockCode": 1,
+      "OnCallStart": "2008-11-04 19:00",
+      "OnCallEnd": "2008-11-05 03:00"
+    },
+    {
+      "id": "103-1-2-start2",
+      "Nurse": 103,
+      "BlockFloor": 1,
+      "BlockCode": 2,
+      "OnCallStart": "2008-11-04 19:00",
+      "OnCallEnd": "2008-11-05 03:00"
+    },
+    {
+      "id": "103-1-3-start2",
+      "Nurse": 103,
+      "BlockFloor": 1,
+      "BlockCode": 3,
+      "OnCallStart": "2008-11-04 19:00",
+      "OnCallEnd": "2008-11-05 03:00"
+    }
+  ],
+  "stays": [
+    {
+      "StayID": 3215,
+      "Patient": 100000001,
+      "Room": 111,
+      "StayStart": "2008-05-01",
+      "StayEnd": "2008-05-04"
+    },
+    {
+      "StayID": 3216,
+      "Patient": 100000003,
+      "Room": 123,
+      "StayStart": "2008-05-03",
+      "StayEnd": "2008-05-14"
+    },
+    {
+      "StayID": 3217,
+      "Patient": 100000004,
+      "Room": 112,
+      "StayStart": "2008-05-02",
+      "StayEnd": "2008-05-03"
+    }
+  ],
+  "undergoes": [
+    {
+      "id": "u1",
+      "Patient": 100000001,
+      "Procedures": 6,
+      "Stay": 3215,
+      "DateUndergoes": "2008-05-02",
+      "Physician": 3,
+      "AssistingNurse": 101
+    },
+    {
+      "id": "u2",
+      "Patient": 100000001,
+      "Procedures": 2,
+      "Stay": 3215,
+      "DateUndergoes": "2008-05-03",
+      "Physician": 7,
+      "AssistingNurse": 101
+    },
+    {
+      "id": "u3",
+      "Patient": 100000004,
+      "Procedures": 1,
+      "Stay": 3217,
+      "DateUndergoes": "2008-05-07",
+      "Physician": 3,
+      "AssistingNurse": 102
+    },
+    {
+      "id": "u4",
+      "Patient": 100000004,
+      "Procedures": 5,
+      "Stay": 3217,
+      "DateUndergoes": "2008-05-09",
+      "Physician": 6,
+      "AssistingNurse": null
+    },
+    {
+      "id": "u5",
+      "Patient": 100000001,
+      "Procedures": 7,
+      "Stay": 3217,
+      "DateUndergoes": "2008-05-10",
+      "Physician": 7,
+      "AssistingNurse": 101
+    },
+    {
+      "id": "u6",
+      "Patient": 100000004,
+      "Procedures": 4,
+      "Stay": 3217,
+      "DateUndergoes": "2008-05-13",
+      "Physician": 3,
+      "AssistingNurse": 103
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "displayName": "System Admin"
+    },
+    {
+      "id": 2,
+      "username": "jdorian",
+      "password": "doctor123",
+      "role": "doctor",
+      "employeeId": 1,
+      "displayName": "John Dorian"
+    },
+    {
+      "id": 3,
+      "username": "ereid",
+      "password": "doctor123",
+      "role": "doctor",
+      "employeeId": 2,
+      "displayName": "Elliot Reid"
+    },
+    {
+      "id": 4,
+      "username": "cturk",
+      "password": "doctor123",
+      "role": "doctor",
+      "employeeId": 3,
+      "displayName": "Christopher Turk"
+    },
+    {
+      "id": 5,
+      "username": "cespinosa",
+      "password": "nurse123",
+      "role": "nurse",
+      "employeeId": 101,
+      "displayName": "Carla Espinosa"
+    },
+    {
+      "id": 6,
+      "username": "lroberts",
+      "password": "nurse123",
+      "role": "nurse",
+      "employeeId": 102,
+      "displayName": "Laverne Roberts"
+    },
+    {
+      "id": 7,
+      "username": "jsmith",
+      "password": "patient123",
+      "role": "patient",
+      "ssn": 100000001,
+      "displayName": "John Smith"
+    },
+    {
+      "id": 8,
+      "username": "gritchie",
+      "password": "patient123",
+      "role": "patient",
+      "ssn": 100000002,
+      "displayName": "Grace Ritchie"
+    },
+    {
+      "id": 9,
+      "username": "ddoe",
+      "password": "patient123",
+      "role": "patient",
+      "ssn": 100000004,
+      "displayName": "Dennis Doe"
+    }
+  ],
+  "duty_shifts": [
+    {
+      "id": "ds1",
+      "personType": "physician",
+      "personId": 1,
+      "date": "2026-07-01",
+      "joining": "08:00",
+      "leaving": "16:00",
+      "shiftType": "OPD"
+    },
+    {
+      "id": "ds2",
+      "personType": "physician",
+      "personId": 2,
+      "date": "2026-07-01",
+      "joining": "09:00",
+      "leaving": "17:00",
+      "shiftType": "OPD"
+    },
+    {
+      "id": "ds3",
+      "personType": "physician",
+      "personId": 3,
+      "date": "2026-07-01",
+      "joining": "07:00",
+      "leaving": "15:00",
+      "shiftType": "Surgery"
+    },
+    {
+      "id": "ds4",
+      "personType": "physician",
+      "personId": 7,
+      "date": "2026-07-02",
+      "joining": "07:00",
+      "leaving": "15:00",
+      "shiftType": "Surgery"
+    },
+    {
+      "id": "ds5",
+      "personType": "nurse",
+      "personId": 101,
+      "date": "2026-07-01",
+      "joining": "08:00",
+      "leaving": "20:00",
+      "shiftType": "Ward"
+    },
+    {
+      "id": "ds6",
+      "personType": "nurse",
+      "personId": 102,
+      "date": "2026-07-01",
+      "joining": "20:00",
+      "leaving": "08:00",
+      "shiftType": "Ward"
+    },
+    {
+      "id": "ds7",
+      "personType": "nurse",
+      "personId": 103,
+      "date": "2026-07-02",
+      "joining": "08:00",
+      "leaving": "20:00",
+      "shiftType": "Ward"
+    }
+  ],
+  "billing": [
+    {
+      "id": "b3215",
+      "patient": 100000001,
+      "stayId": 3215,
+      "items": [
+        {
+          "type": "Procedure",
+          "label": "Reversible Pancreomyoplasty",
+          "amount": 5600
+        },
+        {
+          "type": "Procedure",
+          "label": "Obtuse Pyloric Recombobulation",
+          "amount": 3750
+        },
+        {
+          "type": "Room",
+          "label": "Single Room (111) x 3 nights",
+          "amount": 900
+        },
+        {
+          "type": "Medication",
+          "label": "Procrastin-X (dose 5)",
+          "amount": 45
+        }
+      ],
+      "total": 10295,
+      "paid": false
+    },
+    {
+      "id": "b3217",
+      "patient": 100000004,
+      "stayId": 3217,
+      "items": [
+        {
+          "type": "Procedure",
+          "label": "Reverse Rhinopodoplasty",
+          "amount": 1500
+        },
+        {
+          "type": "Procedure",
+          "label": "Obfuscated Dermogastrotomy",
+          "amount": 4899
+        },
+        {
+          "type": "Procedure",
+          "label": "Complete Walletectomy",
+          "amount": 10000
+        },
+        {
+          "type": "Room",
+          "label": "Single Room (112) x 1 night",
+          "amount": 300
+        },
+        {
+          "type": "Medication",
+          "label": "Thesisin (dose 10)",
+          "amount": 60
+        },
+        {
+          "type": "Medication",
+          "label": "Thesisin (dose 5)",
+          "amount": 30
+        }
+      ],
+      "total": 16789,
+      "paid": true
+    }
+  ],
+  "salaries": [
+    {
+      "physician": 1,
+      "baseSalary": 9500,
+      "commissionRate": 0.04
+    },
+    {
+      "physician": 2,
+      "baseSalary": 10200,
+      "commissionRate": 0.04
+    },
+    {
+      "physician": 3,
+      "baseSalary": 13800,
+      "commissionRate": 0.06
+    },
+    {
+      "physician": 4,
+      "baseSalary": 15500,
+      "commissionRate": 0.03
+    },
+    {
+      "physician": 5,
+      "baseSalary": 19000,
+      "commissionRate": 0.02
+    },
+    {
+      "physician": 6,
+      "baseSalary": 13200,
+      "commissionRate": 0.06
+    },
+    {
+      "physician": 7,
+      "baseSalary": 14600,
+      "commissionRate": 0.06
+    },
+    {
+      "physician": 8,
+      "baseSalary": 7200,
+      "commissionRate": 0.02
+    },
+    {
+      "physician": 9,
+      "baseSalary": 11800,
+      "commissionRate": 0.03
+    }
+  ]
+}
