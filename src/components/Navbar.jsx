@@ -8,7 +8,7 @@ const Navbar = () => {
           HMS
         </Link>
 
-        <div className="space-x-4">
+        <div className="flex items-center space-x-6">
           <Link
             to="/"
             className="hover:text-blue-200 transition"
@@ -16,11 +16,15 @@ const Navbar = () => {
             Home
           </Link>
 
+          <span className="hidden md:block">
+            Dr. John Dorian
+          </span>
+
           <Link
             to="/login"
             className="bg-white text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-100 transition"
           >
-            Login
+            Logout
           </Link>
         </div>
       </div>

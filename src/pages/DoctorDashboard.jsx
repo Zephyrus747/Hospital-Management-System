@@ -1,399 +1,367 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  getAppointments,
+  getPatients,
+  getDoctors,
+  getNurses,
+  updateAppointmentStatus,
+} from "../services/doctorService";
 
 const DoctorDashboard = () => {
-  const [appointments, setAppointments] = useState([
-    {
-      id: 1,
-      patient: "Rahul Sharma",
-      time: "09:00 AM",
-      department: "Cardiology",
-      status: "Pending",
-    },
-    {
-      id: 2,
-      patient: "Priya Das",
-      time: "10:00 AM",
-      department: "Neurology",
-      status: "Confirmed",
-    },
-    {
-      id: 3,
-      patient: "Amit Roy",
-      time: "11:30 AM",
-      department: "Orthopedics",
-      status: "Completed",
-    },
-    {
-      id: 4,
-      patient: "Sneha Paul",
-      time: "02:00 PM",
-      department: "Dermatology",
-      status: "Pending",
-    },
-  ]);
+  const [appointments, setAppointments] = useState([]);
+  const [patients, setPatients] = useState([]);
+  const [doctors, setDoctors] = useState([]);
+  const [nurses, setNurses] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  const changeStatus = (id) => {
-    setAppointments((prev) =>
-      prev.map((item) => {
-        if (item.id !== id) return item;
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-        let nextStatus = "Pending";
+  const fetchData = async () => {
+    try {
+      const [
+        appointmentRes,
+        patientRes,
+        doctorRes,
+        nurseRes,
+      ] = await Promise.all([
+        getAppointments(),
+        getPatients(),
+        getDoctors(),
+        getNurses(),
+      ]);
 
-        if (item.status === "Pending") {
-          nextStatus = "Confirmed";
-        } else if (item.status === "Confirmed") {
-          nextStatus = "Completed";
-        }
+      setAppointments(appointmentRes.data);
+      setPatients(patientRes.data);
+      setDoctors(doctorRes.data);
+      setNurses(nurseRes.data);
 
-        return {
-          ...item,
-          status: nextStatus,
-        };
-      })
-    );
-  };
-
-  const statusColor = (status) => {
-    switch (status) {
-      case "Pending":
-        return "#F59E0B";
-      case "Confirmed":
-        return "#10B981";
-      default:
-        return "#2563EB";
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
     }
   };
+
+  const getPatient = (id) =>
+    patients.find((p) => p.SSN === id)?.Name || "Unknown";
+
+  const getDoctor = (id) =>
+    doctors.find((d) => d.EmployeeID === id)?.Name || "Unknown";
+
+  const getNurse = (id) => {
+    if (!id) return "Not Assigned";
+    return nurses.find((n) => n.EmployeeID === id)?.Name || "Unknown";
+  };
+
+  const updateStatus = async (id, status) => {
+    try {
+      await updateAppointmentStatus(id, status);
+      fetchData();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const filteredAppointments = appointments.filter((item) =>
+    getPatient(item.Patient)
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
+  const totalAppointments = appointments.length;
+
+  const opdAppointments = appointments.filter(
+    (a) => a.VisitType === "OPD"
+  ).length;
+
+  const admissionAppointments = appointments.filter(
+    (a) => a.VisitType === "Admission"
+  ).length;
+
+  const completedAppointments = appointments.filter(
+    (a) => a.status === "Completed"
+  ).length;
+
+  if (loading) {
+    return (
+      <h2
+        style={{
+          textAlign: "center",
+          marginTop: "100px",
+        }}
+      >
+        Loading Dashboard...
+      </h2>
+    );
+  }
 
   return (
     <div
       style={{
+        padding: "25px",
+        background: "#f3f6fa",
         minHeight: "100vh",
-        background:
-          "linear-gradient(135deg,#0F172A,#1E3A8A,#2563EB)",
-        padding: "35px",
       }}
     >
-      <div
+            <h1
         style={{
-          background:
-            "linear-gradient(135deg,#2563EB,#4F46E5)",
-          borderRadius: "24px",
-          padding: "35px",
-          color: "white",
+          textAlign: "center",
+          color: "#1565c0",
           marginBottom: "30px",
-          boxShadow: "0 15px 35px rgba(0,0,0,.3)",
         }}
       >
-        <h2
+        Doctor Dashboard
+      </h1>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
+          gap: "20px",
+          marginBottom: "30px",
+        }}
+      >
+        <div
           style={{
-            fontWeight: "700",
-            marginBottom: "10px",
+            background: "#1976d2",
+            color: "white",
+            padding: "20px",
+            borderRadius: "12px",
+            textAlign: "center",
+            boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
           }}
         >
-          Welcome Back, Dr. John Smith
-        </h2>
+          <h2>{totalAppointments}</h2>
+          <p>Total Appointments</p>
+        </div>
 
-        <p
+        <div
           style={{
-            color: "#E2E8F0",
-            marginBottom: 0,
+            background: "#43a047",
+            color: "white",
+            padding: "20px",
+            borderRadius: "12px",
+            textAlign: "center",
+            boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
           }}
         >
-          You have 18 appointments scheduled for today.
-        </p>
-      </div>
-
-      <div className="row g-4 mb-4">
-
-        {[
-          {
-            title: "Total Patients",
-            value: "120",
-          },
-          {
-            title: "Appointments",
-            value: "18",
-          },
-          {
-            title: "Reports Pending",
-            value: "7",
-          },
-          {
-            title: "Emergency Cases",
-            value: "2",
-          },
-        ].map((item, index) => (
-
-          <div className="col-lg-3 col-md-6" key={index}>
-
-            <div
-              style={{
-                background: "rgba(255,255,255,.08)",
-                backdropFilter: "blur(15px)",
-                border: "1px solid rgba(255,255,255,.15)",
-                borderRadius: "20px",
-                padding: "25px",
-                color: "white",
-                textAlign: "center",
-                boxShadow: "0 8px 25px rgba(0,0,0,.25)",
-                transition: ".3s",
-              }}
-            >
-              <h1
-                style={{
-                  fontSize: "42px",
-                  fontWeight: "700",
-                }}
-              >
-                {item.value}
-              </h1>
-
-              <p
-                style={{
-                  color: "#CBD5E1",
-                  marginBottom: 0,
-                  fontSize: "17px",
-                }}
-              >
-                {item.title}
-              </p>
-
-            </div>
-
-          </div>
-
-        ))}
-
-      </div>
-
-      <div className="row">
-
-        <div className="col-lg-8">
-
-          <div
-            style={{
-              background: "rgba(255,255,255,.08)",
-              backdropFilter: "blur(15px)",
-              border: "1px solid rgba(255,255,255,.15)",
-              borderRadius: "20px",
-              padding: "25px",
-              color: "white",
-              boxShadow: "0 8px 25px rgba(0,0,0,.25)",
-            }}
-          >
-
-            <h4
-              style={{
-                marginBottom: "25px",
-                fontWeight: "600",
-              }}
-            >
-              Today's Appointments
-            </h4>
-
-            <table
-              className="table"
-              style={{
-                color: "white",
-                "--bs-table-bg": "transparent",
-                "--bs-table-color": "white",
-                "--bs-table-border-color":
-                  "rgba(255,255,255,.15)",
-              }}
-            >
-
-              <thead>
-
-                <tr>
-
-                  <th>Patient</th>
-
-                  <th>Time</th>
-
-                  <th>Department</th>
-
-                  <th>Status</th>
-
-                </tr>
-
-              </thead>
-
-              <tbody>
-                                {appointments.map((item) => (
-                  <tr key={item.id}>
-                    <td
-                      style={{
-                        color: "#F8FAFC",
-                        fontWeight: "500",
-                      }}
-                    >
-                      {item.patient}
-                    </td>
-
-                    <td style={{ color: "#CBD5E1" }}>
-                      {item.time}
-                    </td>
-
-                    <td style={{ color: "#CBD5E1" }}>
-                      {item.department}
-                    </td>
-
-                    <td>
-                      <button
-                        onClick={() => changeStatus(item.id)}
-                        style={{
-                          background: statusColor(item.status),
-                          color: "white",
-                          border: "none",
-                          padding: "8px 18px",
-                          borderRadius: "30px",
-                          fontWeight: "600",
-                          cursor: "pointer",
-                          transition: ".3s",
-                          boxShadow:
-                            "0 4px 12px rgba(0,0,0,.25)",
-                        }}
-                      >
-                        {item.status}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-
-              </tbody>
-
-            </table>
-
-          </div>
-
+          <h2>{opdAppointments}</h2>
+          <p>OPD Appointments</p>
         </div>
 
-        <div className="col-lg-4">
-
-          <div
-            style={{
-              background: "rgba(255,255,255,.08)",
-              backdropFilter: "blur(15px)",
-              border: "1px solid rgba(255,255,255,.15)",
-              borderRadius: "20px",
-              padding: "25px",
-              color: "white",
-              marginBottom: "25px",
-              boxShadow:
-                "0 8px 25px rgba(0,0,0,.25)",
-            }}
-          >
-
-            <h4
-              style={{
-                marginBottom: "20px",
-                fontWeight: "600",
-              }}
-            >
-              Today's Schedule
-            </h4>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "12px 0",
-                borderBottom:
-                  "1px solid rgba(255,255,255,.12)",
-              }}
-            >
-              <span>09:00 AM</span>
-              <span>OPD Consultation</span>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "12px 0",
-                borderBottom:
-                  "1px solid rgba(255,255,255,.12)",
-              }}
-            >
-              <span>11:30 AM</span>
-              <span>Ward Round</span>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "12px 0",
-                borderBottom:
-                  "1px solid rgba(255,255,255,.12)",
-              }}
-            >
-              <span>02:00 PM</span>
-              <span>Surgery</span>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                paddingTop: "12px",
-              }}
-            >
-              <span>05:00 PM</span>
-              <span>Staff Meeting</span>
-            </div>
-
-          </div>
-
-          <div
-            style={{
-              background: "rgba(255,255,255,.08)",
-              backdropFilter: "blur(15px)",
-              border: "1px solid rgba(255,255,255,.15)",
-              borderRadius: "20px",
-              padding: "25px",
-              color: "white",
-              boxShadow:
-                "0 8px 25px rgba(0,0,0,.25)",
-            }}
-          >
-
-            <h4
-              style={{
-                marginBottom: "20px",
-                fontWeight: "600",
-              }}
-            >
-              Recent Patients
-            </h4>
-
-            {[
-              "Rahul Sharma",
-              "Priya Das",
-              "Amit Roy",
-              "Sneha Paul",
-              "Arjun Sen",
-            ].map((patient, index) => (
-              <div
-                key={index}
-                style={{
-                  padding: "12px 0",
-                  borderBottom:
-                    index !== 4
-                      ? "1px solid rgba(255,255,255,.12)"
-                      : "none",
-                  color: "#F8FAFC",
-                }}
-              >
-                {patient}
-              </div>
-            ))}
-                      </div>
-
+        <div
+          style={{
+            background: "#fb8c00",
+            color: "white",
+            padding: "20px",
+            borderRadius: "12px",
+            textAlign: "center",
+            boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
+          }}
+        >
+          <h2>{admissionAppointments}</h2>
+          <p>Admissions</p>
         </div>
 
+        <div
+          style={{
+            background: "#8e24aa",
+            color: "white",
+            padding: "20px",
+            borderRadius: "12px",
+            textAlign: "center",
+            boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
+          }}
+        >
+          <h2>{completedAppointments}</h2>
+          <p>Completed</p>
+        </div>
       </div>
 
+      <input
+        type="text"
+        placeholder="Search Patient..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "12px",
+          borderRadius: "10px",
+          border: "1px solid #ccc",
+          marginBottom: "25px",
+          fontSize: "16px",
+          outline: "none",
+        }}
+      />
+
+      <div
+        style={{
+          background: "white",
+          borderRadius: "15px",
+          overflow: "hidden",
+          boxShadow: "0 5px 15px rgba(0,0,0,0.15)",
+        }}
+      >
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+          }}
+        >
+          <thead
+            style={{
+              background: "#1565c0",
+              color: "white",
+            }}
+          >
+            <tr>
+              <th style={{ padding: "15px" }}>Appointment ID</th>
+              <th>Patient</th>
+              <th>Doctor</th>
+              <th>Nurse</th>
+              <th>Room</th>
+              <th>Visit Type</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {filteredAppointments.map((appointment) => (
+  <tr
+    key={appointment.AppointmentID}
+    style={{
+      textAlign: "center",
+      borderBottom: "1px solid #ddd",
+    }}
+  >
+    <td style={{ padding: "15px" }}>
+      {appointment.AppointmentID}
+    </td>
+
+    <td>{getPatient(appointment.Patient)}</td>
+
+    <td>{getDoctor(appointment.Physician)}</td>
+
+    <td>{getNurse(appointment.PrepNurse)}</td>
+
+    <td>{appointment.ExaminationRoom}</td>
+
+    <td>
+      <span
+        style={{
+          background:
+            appointment.VisitType === "Admission"
+              ? "#ff9800"
+              : "#4caf50",
+          color: "white",
+          padding: "6px 12px",
+          borderRadius: "20px",
+          fontSize: "13px",
+        }}
+      >
+        {appointment.VisitType}
+      </span>
+    </td>
+
+    <td>{appointment.Starto}</td>
+
+    <td>
+      <span
+        style={{
+          padding: "7px 14px",
+          borderRadius: "20px",
+          color: "white",
+          background:
+            appointment.status === "Completed"
+              ? "#2e7d32"
+              : appointment.status === "Cancelled"
+              ? "#d32f2f"
+              : "#f9a825",
+        }}
+      >
+        {appointment.status || "Pending"}
+      </span>
+    </td>
+
+    <td>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "8px",
+          flexWrap: "wrap",
+        }}
+      >
+        <button
+          onClick={() =>
+            updateStatus(
+              appointment.id || appointment.AppointmentID,
+              "Completed"
+            )
+          }
+          style={{
+            background: "#2e7d32",
+            color: "white",
+            border: "none",
+            padding: "8px 15px",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Complete
+        </button>
+
+        <button
+          onClick={() =>
+            updateStatus(
+              appointment.id || appointment.AppointmentID,
+              "Cancelled"
+            )
+          }
+          style={{
+            background: "#d32f2f",
+            color: "white",
+            border: "none",
+            padding: "8px 15px",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={() =>
+            updateStatus(
+              appointment.id || appointment.AppointmentID,
+              "Pending"
+            )
+          }
+          style={{
+            background: "#1976d2",
+            color: "white",
+            border: "none",
+            padding: "8px 15px",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          Pending
+        </button>
+      </div>
+    </td>
+  </tr>
+))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
