@@ -1,28 +1,38 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, useLocation } from 'react-router-dom';
+import { ThemeProvider, AuthProvider, useAuth } from './context/AppContext';
+import Navbar    from './components/Navbar';
+import Sidebar   from './components/Sidebar';
+import Footer    from './components/Footer';
+import AppRoutes from './routes/AppRoutes';
 
-import Login from "./pages/Login";
+const PUBLIC = ['/', '/login'];
 
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import DoctorDashboard from "./pages/doctor/DoctorDashboard";
-import NurseDashboard from "./pages/nurse/NurseDashboard";
-import { PatientDashboard } from "./pages/patient/PatientDashboard";
+function Shell() {
+  const { user } = useAuth();
+  const { pathname } = useLocation();
+  // Show bare layout on landing/login only when not logged in
+  if (PUBLIC.includes(pathname) && !user) return <AppRoutes />;
 
-function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-
-        <Route path="/admin" element={<AdminDashboard />} />
-
-        <Route path="/doctor" element={<DoctorDashboard />} />
-
-        <Route path="/nurse" element={<NurseDashboard />} />
-
-        <Route path="/patient" element={<PatientDashboard />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="app-shell">
+      <Sidebar />
+      <Navbar />
+      <main className="main-content">
+        <AppRoutes />
+      </main>
+      <Footer />
+    </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Shell />
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
+  );
+}
