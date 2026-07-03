@@ -1,134 +1,134 @@
-import { useEffect, useState } from "react";
-import {getPatient,getAppointments,getDoctor,getReports,getMedication,getBilling} from "../../services/patientService";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AppContext';
+import { dashboardService } from '../../services/api';
+import Loader from '../../components/Loader';
+import { fmt } from '../../utils/helpers';
+import { usePagination } from '../../hooks/usePagination';
+import Pagination from '../../components/Pagination';
 
-export const PatientDashboard = () => {
-  const [patient, setPatient] = useState(null)
-  const [appointment, setAppointment] = useState([])
-  const [doctor, setDoctor] = useState(null)
-  const [report, setReport] = useState(null)
-  const [medicine, setMedicine] = useState(null)
-  const [bill, setBill] = useState(null)
+export default function PatientDashboard() {
+  const { user } = useAuth();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {loadDashboard()}, [])
+  useEffect(() => {
+    dashboardService.patient(user.ssn)
+      .then(setData)
+      .catch(e => setError(e.message))
+      .finally(() => setLoading(false));
+  }, [user.ssn]);
 
-  const loadDashboard = async () => {
-    try {
-      const ssn = 100000001
+  const apptPagination = usePagination(data?.appointments || [], 5);
+  const billPagination = usePagination(data?.billing || [], 5);
 
-      const patientRes = await getPatient(ssn)
-      const patientData = patientRes.data[0]
-      setPatient(patientData);
+  if (loading) return <Loader label="Loading your portal…" />;
+  if (error) return <div className="form-msg error">{error}</div>;
 
-      const appointmentRes = await getAppointments(ssn)
-
-      if (appointmentRes.data.length > 0) {
-        const appointmentData = appointmentRes.data[0];
-        setAppointment(appointmentData);
-
-        const doctorRes = await getDoctor(appointmentData.Physician)
-        setDoctor(doctorRes.data[0])
-      }
-
-      const reportRes = await getReports(ssn)
-      if (reportRes.data.length > 0) {
-        const reportData = reportRes.data[0]
-        setReport(reportData)
-        const medicineRes = await getMedication(reportData.Medication)
-        setMedicine(medicineRes.data[0])
-      }
-      const billRes = await getBilling(ssn)
-
-      if (billRes.data.length > 0) {
-        setBill(billRes.data[0])
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  if (!patient) {
-    return (
-      <div>
-        Loading...
-      </div>
-    )
-  }
+  const { profile, primaryCarePhysician: pcp, appointments, billing, prescriptions } = data;
+  const totalBill = billing.reduce((s, b) => s + b.total, 0);
+  const unpaid = billing.filter(b => !b.paid).length;
 
   return (
-    <div className="min-h-screen bg-slate-100 p-6">
-      <div className="bg-blue-600 text-white rounded-xl p-6 shadow-lg mb-6">
-        <h1 className="text-4xl font-bold">Welcome, {patient.Name}</h1>
-        <p className="mt-2 text-blue-100">View your appointments, reports and personal information.</p>
+    <div>
+      <div className="page-head">
+        <div>
+          <span className="eyebrow">Patient portal</span>
+          <h1>Welcome, {profile.Name.split(' ')[0]}</h1>
+          <p>Your health overview — appointments, billing, and prescriptions.</p>
+        </div>
+        <div className="page-actions">
+          <Link to="/appointments" className="btn btn-primary">+ Book appointment</Link>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-md p-6">
-          <h2 className="text-xl font-semibold text-blue-700 mb-4 border-b pb-2">My Information</h2>
-          <div className="space-y-2">
-            <p><span className="font-semibold">Patient ID:</span> {patient.SSN}</p>
-            <p><span className="font-semibold">Name:</span> {patient.Name}</p>
-            <p><span className="font-semibold">Phone:</span> {patient.Phone}</p>
-            <p><span className="font-semibold">Address:</span> {patient.Address}</p>
-            <p><span className="font-semibold">Insurance ID:</span> {patient.InsuranceID}</p>
-            <p><span className="font-semibold">Primary Physician ID:</span> {patient.PCP}</p>
+      <div className="stat-grid">
+        <div className="stat-tile">
+          <span className="st-dot"/>
+          <div className="st-label">Appointments</div>
+          <div className="st-value">{appointments.length}</div>
+        </div>
+        <div className="stat-tile">
+          <div className="st-label">Total billed</div>
+          <div className="st-value text-[22px]">{fmt.currency(totalBill)}</div>
+        </div>
+        <div className="stat-tile">
+          <div className="st-label">Unpaid bills</div>
+          <div className={`st-value ${unpaid ? 'text-[var(--danger)]' : 'text-[var(--success)]'}`}>{unpaid}</div>
+        </div>
+        <div className="stat-tile">
+          <div className="st-label">Prescriptions</div>
+          <div className="st-value">{prescriptions.length}</div>
+        </div>
+      </div>
+
+      {pcp && (
+        <div className="card mt-24 mb-6 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-full bg-[var(--info-soft)] border border-[var(--info)] flex items-center justify-center font-[family-name:var(--font-d)] font-bold text-[var(--info)] text-base">
+            {fmt.initials(pcp.Name)}
+          </div>
+          <div>
+            <div className="text-xs text-[var(--text-faint)] uppercase tracking-[.08em] font-semibold">Primary care physician</div>
+            <div className="font-[family-name:var(--font-d)] text-[17px] font-semibold mt-0.5">{pcp.Name}</div>
+            <div className="text-[13px] text-[var(--text-dim)]">{pcp.Position}</div>
           </div>
         </div>
+      )}
 
-        <div className="bg-white rounded-xl shadow-md p-6">
-          <h2 className="text-xl font-semibold text-blue-700 mb-4 border-b pb-2">Upcoming Appointment</h2>
-
-          {appointment ? (
-            <div className="space-y-2">
-              <p><span className="font-semibold">Doctor:</span> Dr. {doctor?.Name}</p>
-              <p><span className="font-semibold">Date:</span> {appointment.Starto}</p>
-              <p><span className="font-semibold">End Time:</span> {appointment.Endo}</p>
-              <p><span className="font-semibold">Room:</span> {appointment.ExaminationRoom}</p>
-              <p><span className="font-semibold">Visit Type:</span> {appointment.VisitType}</p>
+      <div className="sec-title mt-24"><span className="dot"/>Recent appointments</div>
+      {appointments.length === 0
+        ? <div className="empty-state">No appointments yet. <Link to="/appointments" className="text-[var(--accent-b)]">Book one →</Link></div>
+        : (
+          <>
+            <div className="table-wrap">
+              <table className="dt">
+                <thead><tr><th>Date</th><th>Room</th><th>Physician #</th><th>Type</th></tr></thead>
+                <tbody>
+                  {apptPagination.pageItems.map(a => (
+                    <tr key={a.AppointmentID}>
+                      <td className="mono">{fmt.dt(a.Starto)}</td>
+                      <td>{a.ExaminationRoom}</td>
+                      <td className="mono">#{a.Physician}</td>
+                      <td>{a.VisitType === 'Admission' ? <span className="badge badge-danger">Admission</span> : <span className="badge badge-info">OPD</span>}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          ) : ( <p>No Appointment Available</p>
-          )}
+            <div className="mb-2"><Pagination {...apptPagination} pageSize={5} /></div>
+          </>
+        )
+      }
 
-          <button className="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">View Appointment</button>
-        </div>
-      </div>
-
-      <div className="bg-white rounded-xl shadow-md p-6 mt-6">
-        <h2 className="text-xl font-semibold text-green-700 mb-4 border-b pb-2">Latest Medical Report</h2>
-
-        {report ? (
-          <div className="space-y-2">
-            <p><span className="font-semibold">Medicine:</span> {medicine?.Name}</p>
-            <p><span className="font-semibold">Brand:</span> {medicine?.Brand}</p>
-            <p><span className="font-semibold">Dose:</span> {report.Dose}</p>
-            <p><span className="font-semibold">Prescribed By:</span> Dr. {doctor?.Name}</p>
-            <p><span className="font-semibold">Prescription Date:</span> {report.Date}</p>
-          </div>
-        ) : (
-          <p className="text-gray-500">No Medical Report Available</p>
-        )}
-
-        <button className="mt-5 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">View Report</button>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
-
-        <div className="bg-blue-600 text-white rounded-xl p-5">
-          <h3 className="text-lg font-semibold">Appointments</h3>
-          <p className="text-3xl font-bold mt-2">{appointment ? 1:0}</p>
-        </div>
-
-        <div className="bg-green-600 text-white rounded-xl p-5">
-          <h3 className="text-lg font-semibold">Reports</h3>
-          <p className="text-3xl font-bold mt-2">{report ? 1:0}</p>
-        </div>
-
-        <div className="bg-orange-500 text-white rounded-xl p-5">
-          <h3 className="text-lg font-semibold">Billing Status</h3>
-          <p className="text-2xl font-bold mt-2">
-            {bill ? (bill.paid ? "Paid" : "Pending") : "No Bills"}
-          </p>
-        </div>
-      </div>
+   
+      <div className="sec-title mt-24"><span className="dot"/>Billing summary</div>
+      {billing.length === 0
+        ? <div className="empty-state">No billing records yet.</div>
+        : (
+          <>
+            {billPagination.pageItems.map(b => (
+              <div className="card mb-3.5" key={b.id}>
+                <div className="flex justify-between items-center mb-3">
+                  <span className="font-[family-name:var(--font-m)] text-xs text-[var(--text-faint)]">Stay #{b.stayId}</span>
+                  <span className={`badge ${b.paid ? 'badge-success' : 'badge-danger'}`}>{b.paid ? 'Paid' : 'Unpaid'}</span>
+                </div>
+                {b.items.map((item, i) => (
+                  <div className="bill-row" key={i}>
+                    <span>{item.label}</span>
+                    <span className="font-[family-name:var(--font-m)]">{fmt.currency(item.amount)}</span>
+                  </div>
+                ))}
+                <div className="bill-total">
+                  <span>Total</span>
+                  <span className={b.paid ? 'text-[var(--success)]' : 'text-[var(--danger)]'}>{fmt.currency(b.total)}</span>
+                </div>
+              </div>
+            ))}
+            <Pagination {...billPagination} pageSize={5} />
+          </>
+        )
+      }
     </div>
-  )
+  );
 }
