@@ -1,33 +1,19 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-
-/* ─── ICONS ─── */
-function ChevL() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M15 18l-6-6 6-6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-function ChevR() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M9 18l6-6-6-6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
+import {
+  ChevronLeft,
+  ChevronRight,
+  Stethoscope,
+  Bed,
+  Pill,
+  ShieldCheck,
+  Building2,
+  CalendarDays,
+  ClipboardList,
+  Hospital,
+  UserRoundCog,
+  Users,
+} from "lucide-react";
 
 const SLIDES = [
   {
@@ -59,6 +45,7 @@ const SLIDES = [
 function PatientSpeakCarousel() {
   const [current, setCurrent] = useState(0);
   const timerRef = useRef(null);
+
   const next = useCallback(
     () => setCurrent((c) => (c + 1) % SLIDES.length),
     [],
@@ -78,6 +65,7 @@ function PatientSpeakCarousel() {
     fn();
     timerRef.current = setInterval(next, 5000);
   };
+
   const slide = SLIDES[current];
 
   return (
@@ -97,6 +85,7 @@ function PatientSpeakCarousel() {
           Real experiences from those who trusted us with their care.
         </p>
       </div>
+
       <div
         style={{
           position: "relative",
@@ -126,6 +115,7 @@ function PatientSpeakCarousel() {
               "linear-gradient(135deg, rgba(30,58,138,.88) 0%, rgba(37,99,235,.6) 60%, rgba(0,0,0,.3) 100%)",
           }}
         />
+
         <div
           style={{
             position: "absolute",
@@ -153,6 +143,7 @@ function PatientSpeakCarousel() {
           >
             Patient story
           </div>
+
           <h2
             style={{
               fontFamily: "var(--font-d)",
@@ -165,6 +156,7 @@ function PatientSpeakCarousel() {
           >
             {slide.title}
           </h2>
+
           <p
             style={{
               fontSize: 15.5,
@@ -177,6 +169,7 @@ function PatientSpeakCarousel() {
             {slide.subtitle}
           </p>
         </div>
+
         <button
           onClick={() => reset(prev)}
           aria-label="Previous"
@@ -199,8 +192,9 @@ function PatientSpeakCarousel() {
             backdropFilter: "blur(4px)",
           }}
         >
-          <ChevL />
+          <ChevronLeft size={20} />
         </button>
+
         <button
           onClick={() => reset(next)}
           aria-label="Next"
@@ -223,8 +217,9 @@ function PatientSpeakCarousel() {
             backdropFilter: "blur(4px)",
           }}
         >
-          <ChevR />
+          <ChevronRight size={20} />
         </button>
+
         <div
           style={{
             position: "absolute",
@@ -261,22 +256,50 @@ function PatientSpeakCarousel() {
 
 const EXCELLENCE = [
   {
-    icon: "🩺",
+    icon: Stethoscope,
     stat: "9+",
     title: "Specialist physicians across 3 departments",
   },
-  { icon: "🏥", stat: "200+", title: "OPD consultations managed per month" },
-  { icon: "⚕️", stat: "35+", title: "Rooms across 4 floors and 12 blocks" },
-  { icon: "💊", stat: "5", title: "Medication types tracked and dispensed" },
-  { icon: "🛏️", stat: "3", title: "Active inpatient stays at any time" },
   {
-    icon: "📋",
+    icon: Hospital,
+    stat: "200+",
+    title: "OPD consultations managed per month",
+  },
+  {
+    icon: Building2,
+    stat: "35+",
+    title: "Rooms across 4 floors and 12 blocks",
+  },
+  {
+    icon: Pill,
+    stat: "5",
+    title: "Medication types tracked and dispensed",
+  },
+  {
+    icon: Bed,
+    stat: "3",
+    title: "Active inpatient stays at any time",
+  },
+  {
+    icon: ClipboardList,
     stat: "100%",
     title: "Paperless billing and prescription records",
   },
-  { icon: "👨‍⚕️", stat: "25+", title: "Doctors and healthcare professionals" },
-  { icon: "👩‍⚕️", stat: "40+", title: "Nurses and support staff" },
-  { icon: "📅", stat: "500+", title: "Appointments scheduled every month" },
+  {
+    icon: UserRoundCog,
+    stat: "25+",
+    title: "Doctors and healthcare professionals",
+  },
+  {
+    icon: Users,
+    stat: "40+",
+    title: "Nurses and support staff",
+  },
+  {
+    icon: CalendarDays,
+    stat: "500+",
+    title: "Appointments scheduled every month",
+  },
 ];
 
 function ClinicalExcellence() {
@@ -345,7 +368,7 @@ function ClinicalExcellence() {
                 zIndex: 2,
               }}
             >
-              <ChevL />
+              <ChevronLeft size={20} />
             </button>
           )}
 
@@ -362,116 +385,119 @@ function ClinicalExcellence() {
               cursor: "grab",
             }}
           >
-            {EXCELLENCE.map((item, i) => (
-              <div
-                key={i}
-                style={{
-                  flex: "0 0 210px",
-                  background: "#fff",
-                  border: "1px solid #DBEAFE",
-                  borderRadius: 16,
-                  padding: "32px 24px",
-                  textAlign: "center",
-                  boxShadow: "0 4px 20px rgba(37,99,235,.07)",
-                  transition: "transform .25s, box-shadow .25s",
-                }}
-                onMouseEnter={(e) => {
-                  const card = e.currentTarget;
+            {EXCELLENCE.map((item, i) => {
+              const Icon = item.icon;
 
-                  card.style.transform = "translateY(-4px)";
-                  card.style.boxShadow = "0 8px 30px rgba(37,99,235,.14)";
-
-                  const icon = card.querySelector(".icon-main");
-                  const copy = card.querySelector(".icon-copy");
-
-                  icon.style.transform = "translateY(-100%) scale(1.35)";
-                  icon.style.opacity = "0";
-
-                  copy.style.transform = "translateY(0) scale(1.35)";
-                  copy.style.opacity = "1";
-                }}
-                onMouseLeave={(e) => {
-                  const card = e.currentTarget;
-
-                  card.style.transform = "";
-                  card.style.boxShadow = "0 4px 20px rgba(37,99,235,.07)";
-
-                  const icon = card.querySelector(".icon-main");
-                  const copy = card.querySelector(".icon-copy");
-
-                  icon.style.transform = "translateY(0) scale(1)";
-                  icon.style.opacity = "1";
-
-                  copy.style.transform = "translateY(100%) scale(1)";
-                  copy.style.opacity = "0";
-                }}
-              >
+              return (
                 <div
+                  key={i}
                   style={{
-                    position: "relative",
-                    width: 48,
-                    height: 48,
-                    margin: "0 auto 14px",
-                    overflow: "hidden",
-                  }}
-                >
-                  <div
-                    className="icon-main"
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 34,
-                      transition: "all .35s ease",
-                    }}
-                  >
-                    {item.icon}
-                  </div>
-
-                  <div
-                    className="icon-copy"
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 34,
-                      transform: "translateY(100%) scale(1)",
-                      opacity: 0,
-                      transition: "all .35s ease",
-                    }}
-                  >
-                    {item.icon}
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    fontFamily: "var(--font-d)",
-                    fontSize: 42,
-                    fontWeight: 800,
+                    flex: "0 0 210px",
+                    background: "#fff",
+                    border: "1px solid #DBEAFE",
+                    borderRadius: 16,
+                    padding: "32px 24px",
+                    textAlign: "center",
+                    boxShadow: "0 4px 20px rgba(37,99,235,.07)",
+                    transition: "transform .25s, box-shadow .25s",
                     color: "#2563EB",
-                    lineHeight: 1,
-                    marginBottom: 10,
                   }}
-                >
-                  {item.stat}
-                </div>
+                  onMouseEnter={(e) => {
+                    const card = e.currentTarget;
 
-                <div
-                  style={{
-                    fontSize: 13.5,
-                    color: "#64748B",
-                    lineHeight: 1.55,
+                    card.style.transform = "translateY(-4px)";
+                    card.style.boxShadow = "0 8px 30px rgba(37,99,235,.14)";
+
+                    const icon = card.querySelector(".icon-main");
+                    const copy = card.querySelector(".icon-copy");
+
+                    icon.style.transform = "translateY(-100%) scale(1.35)";
+                    icon.style.opacity = "0";
+
+                    copy.style.transform = "translateY(0) scale(1.35)";
+                    copy.style.opacity = "1";
+                  }}
+                  onMouseLeave={(e) => {
+                    const card = e.currentTarget;
+
+                    card.style.transform = "";
+                    card.style.boxShadow = "0 4px 20px rgba(37,99,235,.07)";
+
+                    const icon = card.querySelector(".icon-main");
+                    const copy = card.querySelector(".icon-copy");
+
+                    icon.style.transform = "translateY(0) scale(1)";
+                    icon.style.opacity = "1";
+
+                    copy.style.transform = "translateY(100%) scale(1)";
+                    copy.style.opacity = "0";
                   }}
                 >
-                  {item.title}
+                  <div
+                    style={{
+                      position: "relative",
+                      width: 48,
+                      height: 48,
+                      margin: "0 auto 14px",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <div
+                      className="icon-main"
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        transition: "all .35s ease",
+                      }}
+                    >
+                      <Icon size={30} strokeWidth={2.2} />
+                    </div>
+
+                    <div
+                      className="icon-copy"
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        transform: "translateY(100%) scale(1)",
+                        opacity: 0,
+                        transition: "all .35s ease",
+                      }}
+                    >
+                      <Icon size={30} strokeWidth={2.2} />
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      fontFamily: "var(--font-d)",
+                      fontSize: 42,
+                      fontWeight: 800,
+                      color: "#2563EB",
+                      lineHeight: 1,
+                      marginBottom: 10,
+                    }}
+                  >
+                    {item.stat}
+                  </div>
+
+                  <div
+                    style={{
+                      fontSize: 13.5,
+                      color: "#64748B",
+                      lineHeight: 1.55,
+                    }}
+                  >
+                    {item.title}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {canR && (
@@ -497,7 +523,7 @@ function ClinicalExcellence() {
                 zIndex: 2,
               }}
             >
-              <ChevR />
+              <ChevronRight size={20} />
             </button>
           )}
         </div>
@@ -506,45 +532,34 @@ function ClinicalExcellence() {
   );
 }
 
-/* ════════════════════════════════════════════
-   FEATURES GRID
-════════════════════════════════════════════ */
 const FEATURES = [
   {
-    icon: "🩺",
+    icon: Stethoscope,
     title: "Doctor Portal",
     desc: "View patient lists, duty shifts, salary, commissions, and track operations vs checkups.",
   },
   {
-    icon: "🛏️",
+    icon: Bed,
     title: "Patient Portal",
     desc: "Book or edit appointments, view your admission bill, prescriptions, and primary care physician.",
   },
   {
-    icon: "💊",
+    icon: Pill,
     title: "Nurse Portal",
     desc: "See current assignments, the doctors you assist, your on-call blocks, and room details.",
   },
   {
-    icon: "🔐",
+    icon: ShieldCheck,
     title: "Admin Panel",
     desc: "Full master control — add, edit, or remove any physician, nurse, patient, department, or procedure.",
   },
   {
-    icon: "🏥",
+    icon: Hospital,
     title: "OPD & Admissions",
     desc: "Patients can visit for a general checkup or get admitted for surgery and major treatment.",
   },
-  {
-    icon: "🌙",
-    title: "Dark / Light Mode",
-    desc: "Switch between dark and light themes at any time using the toggle in the top navigation bar.",
-  },
 ];
 
-/* ════════════════════════════════════════════
-   FAQ ACCORDION
-════════════════════════════════════════════ */
 const FAQS = [
   {
     q: "Who can use Meridian HMS?",
@@ -578,6 +593,7 @@ const FAQS = [
 
 function FAQ() {
   const [open, setOpen] = useState(null);
+
   return (
     <section
       style={{
@@ -595,9 +611,11 @@ function FAQ() {
         </h2>
         <p style={S.sub}>Everything you need to know about Meridian HMS.</p>
       </div>
+
       <div>
         {FAQS.map((item, i) => {
           const isOpen = open === i;
+
           return (
             <div
               key={i}
@@ -638,6 +656,7 @@ function FAQ() {
                 >
                   {item.q}
                 </span>
+
                 <span
                   style={{
                     fontSize: 22,
@@ -652,6 +671,7 @@ function FAQ() {
                   +
                 </span>
               </button>
+
               <div
                 style={{
                   overflow: "hidden",
@@ -681,9 +701,6 @@ function FAQ() {
   );
 }
 
-/* ════════════════════════════════════════════
-   FOOTER — Apollo-style multi-column
-════════════════════════════════════════════ */
 const FOOTER_COLS = [
   {
     heading: "Discover Meridian",
@@ -768,7 +785,7 @@ const SOCIAL = [
     href: "#",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
       </svg>
     ),
   },
@@ -777,7 +794,7 @@ const SOCIAL = [
     href: "#",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 12 8.03v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
       </svg>
     ),
   },
@@ -786,7 +803,7 @@ const SOCIAL = [
     href: "#",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z" />
         <circle cx="4" cy="4" r="2" />
       </svg>
     ),
@@ -814,7 +831,6 @@ const SOCIAL = [
 function Footer() {
   return (
     <footer style={{ background: "#1E3A8A", color: "#CBD5E1" }}>
-      {/* Top strip */}
       <div
         style={{
           background: "#2563EB",
@@ -855,6 +871,7 @@ function Footer() {
             Meridian HMS
           </span>
         </div>
+
         <div style={{ display: "flex", gap: 10 }}>
           {SOCIAL.map((s) => (
             <a
@@ -883,13 +900,13 @@ function Footer() {
             </a>
           ))}
         </div>
+
         <div style={{ fontSize: 13.5, color: "rgba(255,255,255,.8)" }}>
           Emergency helpline:{" "}
           <strong style={{ color: "#fff" }}>1800-MERIDIAN</strong>
         </div>
       </div>
 
-      {/* Main link columns */}
       <div
         style={{
           maxWidth: 1300,
@@ -917,6 +934,7 @@ function Footer() {
             >
               {col.heading}
             </div>
+
             <ul
               style={{
                 listStyle: "none",
@@ -952,7 +970,6 @@ function Footer() {
         ))}
       </div>
 
-      {/* Accreditations */}
       <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 40px 32px" }}>
         <div
           style={{
@@ -976,6 +993,7 @@ function Footer() {
           >
             Accredited by
           </span>
+
           {["X", "Y", "Z", "XYZ", "ABC Compliant"].map((badge) => (
             <span
               key={badge}
@@ -995,7 +1013,6 @@ function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div
         style={{
           background: "rgba(0,0,0,.25)",
@@ -1011,6 +1028,7 @@ function Footer() {
           &copy; {new Date().getFullYear()} Meridian Hospital Management System.
           All rights reserved.
         </p>
+
         <div style={{ display: "flex", gap: 20 }}>
           {[
             "Privacy Policy",
@@ -1051,7 +1069,13 @@ export default function Landing() {
         flexDirection: "column",
       }}
     >
-      {/* ── Topbar ── */}
+      <style>{`
+        @keyframes heroShine {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 220% 50%; }
+        }
+      `}</style>
+
       <div
         style={{
           display: "flex",
@@ -1096,6 +1120,7 @@ export default function Landing() {
             Meridian HMS
           </span>
         </div>
+
         <nav style={{ display: "flex", gap: 28, alignItems: "center" }}>
           {["About", "Departments", "Services", "Contact"].map((item) => (
             <a
@@ -1115,6 +1140,7 @@ export default function Landing() {
             </a>
           ))}
         </nav>
+
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
           <Link
             to="/login"
@@ -1135,6 +1161,7 @@ export default function Landing() {
           >
             Sign in
           </Link>
+
           <Link
             to="/login"
             style={{
@@ -1154,7 +1181,6 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* ── Hero ── */}
       <div
         style={{
           background:
@@ -1273,6 +1299,7 @@ export default function Landing() {
           >
             Sign in to your portal →
           </Link>
+
           <a
             href="#features"
             style={{
@@ -1296,27 +1323,8 @@ export default function Landing() {
             See what's inside
           </a>
         </div>
-
-        {/* Demo credentials */}
-        {/* <div style={{ display: 'inline-block', background: 'rgba(255,255,255,.1)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,.2)', borderRadius: 14, padding: '18px 28px', textAlign: 'left', maxWidth: 500, width: '100%' }}>
-          <div style={{ fontSize: 10.5, fontFamily: 'var(--font-m)', textTransform: 'uppercase', letterSpacing: '.12em', color: 'rgba(255,255,255,.55)', marginBottom: 12 }}>Demo credentials</div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '7px 24px' }}>
-            {[
-              ['Admin',   'admin',     'admin123',   '#F59E0B'],
-              ['Doctor',  'jdorian',   'doctor123',  '#34D399'],
-              ['Nurse',   'cespinosa', 'nurse123',   '#60A5FA'],
-              ['Patient', 'jsmith',    'patient123', '#F87171'],
-            ].map(([role, u, p, color]) => (
-              <div key={u} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', borderBottom: '1px solid rgba(255,255,255,.1)' }}>
-                <span style={{ background: `${color}22`, border: `1px solid ${color}55`, color, borderRadius: 6, padding: '2px 9px', fontSize: 11, fontWeight: 700 }}>{role}</span>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,.7)', fontFamily: 'var(--font-m)' }}>{u} / {p}</span>
-              </div>
-            ))}
-          </div>
-        </div> */}
       </div>
 
-      {/* ── Trust bar ── */}
       <div
         style={{
           background: "#fff",
@@ -1374,104 +1382,56 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* ── 2-inch gap ── */}
       <div style={{ height: 96, background: "#F8FAFC" }} />
 
-      {/* ── Patients Speak ── */}
       <PatientSpeakCarousel />
-
-      {/* ── Clinical Excellence ── */}
       <ClinicalExcellence />
 
-      {/* ── Features grid ── */}
-      <div
-        id="features"
-        style={{ background: "#F8FAFC", padding: "80px 40px" }}
-      >
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <span style={S.eyebrow}>What's inside</span>
-            <h2 style={{ ...S.h2, color: "#1E3A8A" }}>
+      <div id="features" className="bg-slate-50 px-10 py-20">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="mb-12 text-center">
+            <span className="mb-2.5 block font-mono text-[11.5px] font-bold uppercase tracking-[.14em] text-blue-600">
+              What&apos;s inside
+            </span>
+            <h2 className="mb-3 font-[var(--font-d)] text-[34px] font-extrabold tracking-[-0.02em] text-[#1E3A8A]">
               Everything your hospital needs
             </h2>
-            <p style={S.sub}>
+            <p className="mx-auto max-w-[520px] text-[15.5px] leading-[1.7] text-slate-500">
               Purpose-built tools for every role in your care team.
             </p>
           </div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(280px,1fr))",
-              gap: 20,
-            }}
-          >
-            {FEATURES.map((f) => (
-              <div
-                key={f.title}
-                style={{
-                  background: "#fff",
-                  border: "1px solid #E2E8F0",
-                  borderRadius: 16,
-                  padding: "28px 24px",
-                  transition:
-                    "border-color .15s, transform .15s, box-shadow .15s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "#2563EB";
-                  e.currentTarget.style.transform = "translateY(-3px)";
-                  e.currentTarget.style.boxShadow =
-                    "0 8px 24px rgba(37,99,235,.1)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "#E2E8F0";
-                  e.currentTarget.style.transform = "";
-                  e.currentTarget.style.boxShadow = "";
-                }}
-              >
+
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-5">
+            {FEATURES.map((f) => {
+              const Icon = f.icon;
+
+              return (
                 <div
-                  style={{
-                    width: 46,
-                    height: 46,
-                    borderRadius: 12,
-                    background: "#EFF6FF",
-                    border: "1px solid #DBEAFE",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 22,
-                    marginBottom: 16,
-                  }}
+                  key={f.title}
+                  className="rounded-2xl border border-slate-200 bg-white px-6 py-7 transition duration-150 hover:-translate-y-[3px] hover:border-blue-600 hover:shadow-[0_8px_24px_rgba(37,99,235,.1)]"
                 >
-                  {f.icon}
+                  <div className="mb-4 flex h-[46px] w-[46px] items-center justify-center rounded-xl border border-blue-100 bg-blue-50">
+                    <Icon
+                      size={22}
+                      strokeWidth={2.2}
+                      className="text-blue-600"
+                    />
+                  </div>
+
+                  <h3 className="mb-2 font-[var(--font-d)] text-[16.5px] font-bold text-slate-800">
+                    {f.title}
+                  </h3>
+
+                  <p className="m-0 text-[13.5px] leading-[1.65] text-slate-500">
+                    {f.desc}
+                  </p>
                 </div>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-d)",
-                    fontSize: 16.5,
-                    fontWeight: 700,
-                    color: "#1E293B",
-                    margin: "0 0 8px",
-                  }}
-                >
-                  {f.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: 13.5,
-                    color: "#64748B",
-                    lineHeight: 1.65,
-                    margin: 0,
-                  }}
-                >
-                  {f.desc}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
 
-      {/* ── CTA banner ── */}
       <div
         style={{
           background: "linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%)",
@@ -1490,6 +1450,7 @@ export default function Landing() {
         >
           Ready to streamline your hospital?
         </h2>
+
         <p
           style={{
             fontSize: 17,
@@ -1502,6 +1463,7 @@ export default function Landing() {
           Sign in to your role portal and experience Meridian HMS firsthand with
           demo data already loaded.
         </p>
+
         <Link
           to="/login"
           style={{
@@ -1520,18 +1482,15 @@ export default function Landing() {
         </Link>
       </div>
 
-      {/* ── FAQ ── */}
       <div style={{ background: "#F8FAFC" }}>
         <FAQ />
       </div>
 
-      {/* ── Footer ── */}
       <Footer />
     </div>
   );
 }
 
-/* ─── SHARED STYLE TOKENS ─── */
 const S = {
   eyebrow: {
     display: "block",
