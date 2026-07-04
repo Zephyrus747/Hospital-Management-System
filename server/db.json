@@ -391,16 +391,6 @@
       "VisitType": "Admission"
     },
     {
-      "AppointmentID": 59871321,
-      "Patient": 100000004,
-      "PrepNurse": null,
-      "Physician": 4,
-      "Starto": "2008-04-26 10:00",
-      "Endo": "2008-04-26 11:00",
-      "ExaminationRoom": "C",
-      "VisitType": "OPD"
-    },
-    {
       "AppointmentID": 69879231,
       "Patient": 100000003,
       "PrepNurse": 103,
@@ -413,7 +403,7 @@
     {
       "AppointmentID": 76983231,
       "Patient": 100000001,
-      "PrepNurse": null,
+      "PrepNurse": 105,
       "Physician": 3,
       "Starto": "2008-04-26 12:00",
       "Endo": "2008-04-26 13:00",
