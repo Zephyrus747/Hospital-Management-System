@@ -1,40 +1,55 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { authService } from '../services/api';
-import { useAuth } from '../context/AppContext';
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { authService } from "../services/api";
+import { useAuth } from "../context/AppContext";
 
 const SHORTCUTS = [
-  { label: 'Admin', username: 'admin', password: 'admin123', role: 'admin' },
-  { label: 'Doctor', username: 'jdorian', password: 'doctor123', role: 'doctor' },
-  { label: 'Nurse', username: 'cespinosa', password: 'nurse123', role: 'nurse' },
-  { label: 'Patient', username: 'jsmith', password: 'patient123', role: 'patient' },
+  { label: "Admin", username: "admin", password: "admin123", role: "admin" },
+  {
+    label: "Doctor",
+    username: "jdorian",
+    password: "doctor123",
+    role: "doctor",
+  },
+  {
+    label: "Nurse",
+    username: "cespinosa",
+    password: "nurse123",
+    role: "nurse",
+  },
+  {
+    label: "Patient",
+    username: "jsmith",
+    password: "patient123",
+    role: "patient",
+  },
 ];
 
 const ROLE_COLORS = {
-  admin: '#1E3A8A',
-  doctor: '#2563EB',
-  nurse: '#16A34A',
-  patient: '#DC2626',
+  admin: "#1E3A8A",
+  doctor: "#2563EB",
+  nurse: "#16A34A",
+  patient: "#DC2626",
 };
 
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({ username: '', password: '' });
-  const [error, setError] = useState('');
+  const [form, setForm] = useState({ username: "", password: "" });
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }));
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
     try {
       const user = await authService.login(form.username, form.password);
       login(user);
-      navigate('/app');
+      navigate("/app");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -42,7 +57,8 @@ export default function Login() {
     }
   };
 
-  const fillShortcut = (s) => setForm({ username: s.username, password: s.password });
+  const fillShortcut = (s) =>
+    setForm({ username: s.username, password: s.password });
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[linear-gradient(135deg,#1E3A8A_0%,#2563EB_50%,#3B82F6_100%)] p-6 font-['Roboto',sans-serif]">
@@ -74,7 +90,7 @@ export default function Login() {
                 type="text"
                 placeholder="e.g. jdorian"
                 value={form.username}
-                onChange={set('username')}
+                onChange={set("username")}
                 className="box-border w-full rounded-lg border border-[#E2E8F0] bg-white px-[14px] py-[10px] text-[14px] text-[#1E293B] outline-none transition-colors focus:border-[#2563EB]"
               />
             </div>
@@ -87,7 +103,7 @@ export default function Login() {
                 type="password"
                 placeholder="••••••••"
                 value={form.password}
-                onChange={set('password')}
+                onChange={set("password")}
                 className="box-border w-full rounded-lg border border-[#E2E8F0] bg-white px-[14px] py-[10px] text-[14px] text-[#1E293B] outline-none transition-colors focus:border-[#2563EB]"
               />
             </div>
@@ -104,11 +120,11 @@ export default function Login() {
             disabled={loading}
             className="mt-[18px] w-full rounded-lg border-0 bg-[#2563EB] p-3 text-[15px] font-medium text-white transition-colors hover:bg-[#1E3A8A] disabled:cursor-default disabled:opacity-70"
           >
-            {loading ? 'Signing in…' : 'Sign in →'}
+            {loading ? "Signing in…" : "Sign in →"}
           </button>
         </form>
 
-        <div className="mt-[26px]">
+        {/* <div className="mt-[26px]">
           <div className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#64748B]">
             Quick fill — demo accounts
           </div>
@@ -134,7 +150,7 @@ export default function Login() {
               <span className="ml-auto text-[11px] text-[#94A3B8]">click to fill</span>
             </div>
           ))}
-        </div>
+        </div> */}
 
         <div className="mt-5 text-center text-[12.5px] text-[#64748B]">
           <Link to="/" className="text-[#2563EB] no-underline">

@@ -47,35 +47,49 @@ export function AdminDepartments() {
 
   return (
     <div>
-      <div className="page-head">
+      <div className="mb-[26px] flex flex-wrap items-end justify-between gap-4">
         <div>
-          <span className="eyebrow">Admin / manage</span>
-          <h1>Departments</h1>
+          <span className="mb-[6px] block font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--accent)]">
+            Admin / manage
+          </span>
+          <h1 className="m-0 font-[var(--font-d)] text-[28px] font-bold tracking-[-0.01em] text-[var(--text)]">
+            Departments
+          </h1>
         </div>
       </div>
 
       <form
-        className="form-card"
-        style={{ marginBottom: 28 }}
+        className="mb-7 max-w-[660px] rounded-[16px] border border-[var(--border)] bg-[var(--surface)] p-[26px]"
         onSubmit={handleAdd}
       >
-        <div className="sec-title">
-          <span className="dot" />
+        <div className="mb-[14px] flex items-center gap-[10px] font-[var(--font-d)] text-[15px] font-semibold text-[var(--text)]">
+          <span className="h-[6px] w-[6px] shrink-0 rounded-full bg-[var(--accent)]" />
           Add department
         </div>
-        <div className="form-grid">
-          <div className="field">
-            <label>Department ID</label>
+
+        <div className="mt-[18px] grid grid-cols-2 gap-4 max-[560px]:grid-cols-1">
+          <div className="flex flex-col gap-[6px]">
+            <label className="text-[12px] font-semibold uppercase tracking-[0.04em] text-[var(--text-dim)]">
+              Department ID
+            </label>
             <input
               type="number"
               placeholder="e.g. 4"
               value={form.DepartmentID}
               onChange={set("DepartmentID")}
+              className="rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-[13px] py-[10px] text-[14px] text-[var(--text)] outline-none transition duration-150 placeholder:text-[var(--text-faint)] focus:border-[var(--accent)] focus:bg-[var(--surface-2)]"
             />
           </div>
-          <div className="field">
-            <label>Head physician</label>
-            <select value={form.Head} onChange={set("Head")}>
+
+          <div className="flex flex-col gap-[6px]">
+            <label className="text-[12px] font-semibold uppercase tracking-[0.04em] text-[var(--text-dim)]">
+              Head physician
+            </label>
+            <select
+              value={form.Head}
+              onChange={set("Head")}
+              className="rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-[13px] py-[10px] text-[14px] text-[var(--text)] outline-none transition duration-150 focus:border-[var(--accent)] focus:bg-[var(--surface-2)]"
+            >
               <option value="">— Select —</option>
               {physicians.map((p) => (
                 <option key={p.EmployeeID} value={p.EmployeeID}>
@@ -84,27 +98,37 @@ export function AdminDepartments() {
               ))}
             </select>
           </div>
-          <div className="field span-2">
-            <label>Department name</label>
+
+          <div className="col-span-2 flex flex-col gap-[6px] max-[560px]:col-span-1">
+            <label className="text-[12px] font-semibold uppercase tracking-[0.04em] text-[var(--text-dim)]">
+              Department name
+            </label>
             <input
               placeholder="e.g. Radiology"
               value={form.Name}
               onChange={set("Name")}
+              className="rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-[13px] py-[10px] text-[14px] text-[var(--text)] outline-none transition duration-150 placeholder:text-[var(--text-faint)] focus:border-[var(--accent)] focus:bg-[var(--surface-2)]"
             />
           </div>
         </div>
-        <div className="form-actions">
+
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <button
             type="submit"
-            className="btn btn-primary"
+            className="inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-[6px] border border-transparent bg-[var(--accent)] px-[18px] py-[10px] text-[14px] font-semibold leading-none tracking-[0.04em] text-white uppercase transition duration-150 active:translate-y-px hover:bg-[var(--accent-b)] disabled:cursor-not-allowed disabled:opacity-50"
             disabled={status.state === "loading"}
           >
             {status.state === "loading" ? "Adding…" : "+ Add department"}
           </button>
         </div>
+
         {status.msg && (
           <div
-            className={`form-msg ${status.state === "success" ? "success" : "error"}`}
+            className={`mt-[14px] rounded-[6px] border px-[14px] py-[10px] text-[13px] ${
+              status.state === "success"
+                ? "border-[rgba(22,163,74,.25)] bg-[var(--success-soft)] text-[var(--success)]"
+                : "border-[rgba(220,38,38,.25)] bg-[var(--danger-soft)] text-[var(--danger)]"
+            }`}
           >
             {status.msg}
           </div>
@@ -183,63 +207,84 @@ export function AdminProcedures() {
 
   return (
     <div>
-      <div className="page-head">
+      <div className="mb-[26px] flex flex-wrap items-end justify-between gap-4">
         <div>
-          <span className="eyebrow">Admin / manage</span>
-          <h1>Procedures</h1>
+          <span className="mb-[6px] block font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--accent)]">
+            Admin / manage
+          </span>
+          <h1 className="m-0 font-[var(--font-d)] text-[28px] font-bold tracking-[-0.01em] text-[var(--text)]">
+            Procedures
+          </h1>
         </div>
       </div>
 
       <form
-        className="form-card"
-        style={{ marginBottom: 28 }}
+        className="mb-7 max-w-[660px] rounded-[16px] border border-[var(--border)] bg-[var(--surface)] p-[26px]"
         onSubmit={handleAdd}
       >
-        <div className="sec-title">
-          <span className="dot" />
+        <div className="mb-[14px] flex items-center gap-[10px] font-[var(--font-d)] text-[15px] font-semibold text-[var(--text)]">
+          <span className="h-[6px] w-[6px] shrink-0 rounded-full bg-[var(--accent)]" />
           Add procedure
         </div>
-        <div className="form-grid">
-          <div className="field">
-            <label>Code</label>
+
+        <div className="mt-[18px] grid grid-cols-2 gap-4 max-[560px]:grid-cols-1">
+          <div className="flex flex-col gap-[6px]">
+            <label className="text-[12px] font-semibold uppercase tracking-[0.04em] text-[var(--text-dim)]">
+              Code
+            </label>
             <input
               type="number"
               placeholder="e.g. 8"
               value={form.Code}
               onChange={set("Code")}
+              className="rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-[13px] py-[10px] text-[14px] text-[var(--text)] outline-none transition duration-150 placeholder:text-[var(--text-faint)] focus:border-[var(--accent)] focus:bg-[var(--surface-2)]"
             />
           </div>
-          <div className="field">
-            <label>Cost (USD)</label>
+
+          <div className="flex flex-col gap-[6px]">
+            <label className="text-[12px] font-semibold uppercase tracking-[0.04em] text-[var(--text-dim)]">
+              Cost (USD)
+            </label>
             <input
               type="number"
               step="0.01"
               placeholder="e.g. 1200.00"
               value={form.Cost}
               onChange={set("Cost")}
+              className="rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-[13px] py-[10px] text-[14px] text-[var(--text)] outline-none transition duration-150 placeholder:text-[var(--text-faint)] focus:border-[var(--accent)] focus:bg-[var(--surface-2)]"
             />
           </div>
-          <div className="field span-2">
-            <label>Procedure name</label>
+
+          <div className="col-span-2 flex flex-col gap-[6px] max-[560px]:col-span-1">
+            <label className="text-[12px] font-semibold uppercase tracking-[0.04em] text-[var(--text-dim)]">
+              Procedure name
+            </label>
             <input
               placeholder="e.g. Arthroscopic Repair"
               value={form.Name}
               onChange={set("Name")}
+              className="rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-[13px] py-[10px] text-[14px] text-[var(--text)] outline-none transition duration-150 placeholder:text-[var(--text-faint)] focus:border-[var(--accent)] focus:bg-[var(--surface-2)]"
             />
           </div>
         </div>
-        <div className="form-actions">
+
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <button
             type="submit"
-            className="btn btn-primary"
+            className="inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-[6px] border border-transparent bg-[var(--accent)] px-[18px] py-[10px] text-[14px] font-semibold leading-none tracking-[0.04em] text-white uppercase transition duration-150 active:translate-y-px hover:bg-[var(--accent-b)] disabled:cursor-not-allowed disabled:opacity-50"
             disabled={status.state === "loading"}
           >
             {status.state === "loading" ? "Adding…" : "+ Add procedure"}
           </button>
         </div>
+
         {status.msg && (
           <div
-            className={`form-msg ${status.state === "success" ? "success" : "error"}`}
+            className={`mt-[14px] rounded-[6px] border px-[14px] py-[10px] text-[13px] ${
+              status.state === "success"
+                ? "border-[rgba(22,163,74,.25)] bg-[var(--success-soft)] text-[var(--success)]"
+                : "border-[rgba(220,38,38,.25)] bg-[var(--danger-soft)] text-[var(--danger)]"
+            }`}
           >
             {status.msg}
           </div>
