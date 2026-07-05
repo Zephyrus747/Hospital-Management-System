@@ -7,8 +7,13 @@ import { fmt, isBlank, toNum } from '../../utils/helpers';
 import { usePagination } from '../../hooks/usePagination';
 import Pagination from '../../components/Pagination';
 
+const ROOM_OPTIONS = ['A', 'B', 'C', 'D'];
+const randomRoom = () => ROOM_OPTIONS[Math.floor(Math.random() * ROOM_OPTIONS.length)];
+
 export default function PatientAppointments() {
   const { user } = useAuth();
+  const isPatient = user.role === 'patient';
+
   const [appts, setAppts] = useState([]);
   const [physicians, setPhysicians] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,14 +25,17 @@ export default function PatientAppointments() {
   const load = async () => {
     setLoading(true);
     try {
-      const [dash, docs] = await Promise.all([dashboardService.patient(user.ssn), refService.physicians()]);
+      const [dash, docs] = await Promise.all([
+        isPatient ? dashboardService.patient(user.ssn) : dashboardService.doctor(user.employeeId),
+        refService.physicians(),
+      ]);
       setAppts(dash.appointments);
       setPhysicians(docs);
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
   };
 
-  useEffect(() => { load(); }, [user.ssn]);
+  useEffect(() => { load(); }, [user.ssn, user.employeeId]);
 
   const pagination = usePagination(appts, 5);
 
@@ -41,13 +49,13 @@ export default function PatientAppointments() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isBlank(form.Physician) || isBlank(form.Starto) || isBlank(form.Endo) || isBlank(form.ExaminationRoom)) {
+    if (isBlank(form.Physician) || isBlank(form.Starto) || isBlank(form.Endo)) {
       setStatus({ state: 'error', msg: 'All fields are required.' }); return;
     }
     setStatus({ state: 'loading', msg: '' });
     try {
       if (editTarget) {
-        await patientService.editAppointment(editTarget, { ...form, Physician: toNum(form.Physician) });
+        await patientService.editAppointment(editTarget, { ...form, Physician: toNum(form.Physician), ExaminationRoom: form.ExaminationRoom || randomRoom() });
         setStatus({ state: 'success', msg: 'Appointment updated.' });
         setEditTarget(null);
       } else {
@@ -58,7 +66,7 @@ export default function PatientAppointments() {
           Physician: toNum(form.Physician),
           Starto: form.Starto.replace('T', ' '),
           Endo: form.Endo.replace('T', ' '),
-          ExaminationRoom: form.ExaminationRoom,
+          ExaminationRoom: randomRoom(),
           VisitType: form.VisitType,
         });
         setStatus({ state: 'success', msg: 'Appointment booked!' });
@@ -75,17 +83,19 @@ export default function PatientAppointments() {
     <div>
       <div className="page-head">
         <div>
-          <span className="eyebrow">Patient portal</span>
+          <span className="eyebrow">{isPatient ? 'Patient portal' : 'Doctor portal'}</span>
           <h1>Appointments</h1>
-          <p>View, book, or modify your appointments.</p>
+          <p>{isPatient ? 'View, book, or modify your appointments.' : 'View your scheduled appointments.'}</p>
         </div>
-        <button className="btn btn-primary" onClick={() => { setShowBook(true); setEditTarget(null); setStatus({ state: 'idle', msg: '' }); }}>
-          + Book appointment
-        </button>
+        {isPatient && (
+          <button className="btn btn-primary" onClick={() => { setShowBook(true); setEditTarget(null); setStatus({ state: 'idle', msg: '' }); }}>
+            + Book appointment
+          </button>
+        )}
       </div>
 
-      {(showBook || editTarget) && (
-        <div className="form-card mb-7">
+      {isPatient && (showBook || editTarget) && (
+        <div className="form-card" style={{ marginBottom: 28 }}>
           <div className="sec-title"><span className="dot"/>{editTarget ? 'Edit appointment' : 'Book new appointment'}</div>
           <form onSubmit={handleSubmit}>
             <div className="form-grid">
@@ -98,7 +108,6 @@ export default function PatientAppointments() {
               </div>
               <div className="field"><label>Start time</label><input type="datetime-local" value={form.Starto} onChange={set('Starto')}/></div>
               <div className="field"><label>End time</label><input type="datetime-local" value={form.Endo} onChange={set('Endo')}/></div>
-              <div className="field"><label>Examination Room</label><input placeholder="e.g. A" value={form.ExaminationRoom} onChange={set('ExaminationRoom')}/></div>
               <div className="field">
                 <label>Visit type</label>
                 <select value={form.VisitType} onChange={set('VisitType')}>
@@ -132,13 +141,13 @@ export default function PatientAppointments() {
                   <td>{doc?.Name || `#${a.Physician}`}</td>
                   <td>{a.VisitType === 'Admission' ? <span className="badge badge-danger">Admission</span> : <span className="badge badge-info">OPD</span>}</td>
                   <td>
-                    <Link to={`/appointments/${a.AppointmentID}`} className="btn btn-ghost btn-xs mr-1.5">View</Link>
-                    <button className="btn btn-ghost btn-xs" onClick={() => startEdit(a)}>Edit</button>
+                    <Link to={`/appointments/${a.AppointmentID}`} className="btn btn-ghost btn-xs" style={{ marginRight: 6 }}>View</Link>
+                    {isPatient && <button className="btn btn-ghost btn-xs" onClick={() => startEdit(a)}>Edit</button>}
                   </td>
                 </tr>
               );
             })}
-            {appts.length === 0 && <tr><td colSpan={6} className="text-dim p-5 text-center">No appointments yet.</td></tr>}
+            {appts.length === 0 && <tr><td colSpan={6} className="text-dim" style={{padding:20,textAlign:'center'}}>No appointments yet.</td></tr>}
           </tbody>
         </table>
       </div>
