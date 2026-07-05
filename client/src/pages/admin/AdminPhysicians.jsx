@@ -164,7 +164,7 @@ export default function AdminPhysicians() {
               key: "Position",
               label: "Position",
               render: (v) => (
-                <span className="inline-flex items-center gap-[5px] rounded-[99px] bg-(--info-soft) px-2.25 py-0.75 text-[11px] font-semibold tracking-[0.02em] text-[var(--info)]">
+                <span className="inline-flex items-center gap-1.25 rounded-[99px] bg-(--info-soft) px-2.25 py-0.75 text-[11px] font-semibold tracking-[0.02em] text-(--info)">
                   {v}
                 </span>
               ),

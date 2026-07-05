@@ -15,6 +15,13 @@ import {
   Users,
 } from "lucide-react";
 
+const NAV_ITEMS = [
+  { label: "About", href: "#about" },
+  { label: "Departments", href: "#departments" },
+  { label: "Services", href: "#services" },
+  { label: "Contact", href: "#contact" },
+];
+
 const SLIDES = [
   {
     image: "/image1-carousel.jpeg",
@@ -553,11 +560,11 @@ const FEATURES = [
     title: "Admin Panel",
     desc: "Full master control — add, edit, or remove any physician, nurse, patient, department, or procedure.",
   },
-  {
-    icon: Hospital,
-    title: "OPD & Admissions",
-    desc: "Patients can visit for a general checkup or get admitted for surgery and major treatment.",
-  },
+  // {
+  //   icon: Hospital,
+  //   title: "OPD & Admissions",
+  //   desc: "Patients can visit for a general checkup or get admitted for surgery and major treatment.",
+  // }
 ];
 
 const FAQS = [
@@ -1060,126 +1067,45 @@ function Footer() {
 
 export default function Landing() {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#F8FAFC",
-        fontFamily: "var(--font-b)",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <style>{`
-        @keyframes heroShine {
-          0% { background-position: 0% 50%; }
-          100% { background-position: 220% 50%; }
-        }
-      `}</style>
-
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 40px",
-          height: 64,
-          borderBottom: "1px solid #E2E8F0",
-          background: "#fff",
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-          boxShadow: "0 1px 4px rgba(37,99,235,.06)",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div
-            style={{
-              width: 34,
-              height: 34,
-              borderRadius: 8,
-              background: "#2563EB",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 800,
-              fontSize: 18,
-              color: "#fff",
-              fontFamily: "var(--font-d)",
-            }}
-          >
+    <div className="min-h-screen scroll-smooth bg-slate-50 font-[var(--font-b)] flex flex-col">
+      <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6 shadow-[0_1px_4px_rgba(37,99,235,0.06)] md:px-10">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-[34px] w-[34px] items-center justify-center rounded-lg bg-blue-600 font-[var(--font-d)] text-lg font-extrabold text-white">
             +
           </div>
-          <span
-            style={{
-              fontFamily: "var(--font-d)",
-              fontWeight: 700,
-              fontSize: 17,
-              color: "#1E3A8A",
-            }}
-          >
+          <span className="font-[var(--font-d)] text-[17px] font-bold text-[#1E3A8A]">
             Meridian HMS
           </span>
         </div>
 
-        <nav style={{ display: "flex", gap: 28, alignItems: "center" }}>
-          {["About", "Departments", "Services", "Contact"].map((item) => (
+        <nav className="hidden items-center gap-7 md:flex">
+          {NAV_ITEMS.map((item) => (
             <a
-              key={item}
-              href="#"
-              style={{
-                fontSize: 14,
-                fontWeight: 500,
-                color: "#64748B",
-                textDecoration: "none",
-                transition: "color .15s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#2563EB")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "#64748B")}
+              key={item.label}
+              href={item.href}
+              className="text-sm font-medium text-slate-500 transition-colors duration-150 hover:text-blue-600"
             >
-              {item}
+              {item.label}
             </a>
           ))}
         </nav>
 
-        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+        <div className="flex items-center gap-2.5">
           <Link
             to="/login"
-            style={{
-              padding: "8px 18px",
-              borderRadius: 8,
-              border: "1px solid #2563EB",
-              color: "#2563EB",
-              fontWeight: 600,
-              fontSize: 13.5,
-              background: "transparent",
-              textDecoration: "none",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#EFF6FF")}
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "transparent")
-            }
+            className="rounded-lg border border-blue-600 px-[18px] py-2 text-[13.5px] font-semibold text-blue-600 transition-colors duration-150 hover:bg-blue-50"
           >
             Sign in
           </Link>
 
           <Link
             to="/login"
-            style={{
-              padding: "8px 18px",
-              borderRadius: 8,
-              background: "#2563EB",
-              color: "#fff",
-              fontWeight: 600,
-              fontSize: 13.5,
-              textDecoration: "none",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#1E3A8A")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#2563EB")}
+            className="rounded-lg bg-blue-500 px-[18px] py-2 text-[13.5px] font-semibold text-white transition-colors duration-150 hover:bg-[#1E3A8A] hover:text-white"
           >
             Get started →
           </Link>
         </div>
-      </div>
+      </header>
 
       <div
         style={{
@@ -1301,7 +1227,7 @@ export default function Landing() {
           </Link>
 
           <a
-            href="#features"
+            href="#services"
             style={{
               padding: "14px 32px",
               borderRadius: 10,
@@ -1384,10 +1310,15 @@ export default function Landing() {
 
       <div style={{ height: 96, background: "#F8FAFC" }} />
 
-      <PatientSpeakCarousel />
-      <ClinicalExcellence />
+      <section id="about">
+        <PatientSpeakCarousel />
+      </section>
 
-      <div id="features" className="bg-slate-50 px-10 py-20">
+      <section id="departments">
+        <ClinicalExcellence />
+      </section>
+
+      <div id="services" className="bg-slate-50 px-10 py-20">
         <div className="mx-auto max-w-[1200px]">
           <div className="mb-12 text-center">
             <span className="mb-2.5 block font-mono text-[11.5px] font-bold uppercase tracking-[.14em] text-blue-600">
@@ -1486,7 +1417,9 @@ export default function Landing() {
         <FAQ />
       </div>
 
-      <Footer />
+      <div id="contact">
+        <Footer />
+      </div>
     </div>
   );
 }

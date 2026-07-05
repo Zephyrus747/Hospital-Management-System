@@ -259,7 +259,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="sidebar bg-(--surface) border-r border-border flex flex-col px-3 py-4.5 gap-4.5 overflow-y-auto">
+    <aside className="sidebar bg-(--surface) border-r border-border flex flex-col px-3 py-4.5 gap-4.5 h-full overflow-hidden">
       <div className="flex items-center gap-2.5 px-1.5 pb-4 border-b border-border">
         <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center [font-family:var(--font-d)] font-bold text-[17px] text-white">
           +
@@ -274,7 +274,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <nav className="flex flex-col gap-4 flex-1">
+      <nav className="flex flex-col gap-4 flex-1 min-h-0">
         {groups.map((g) => (
           <div key={g.label}>
             <div className="text-[10px] uppercase tracking-widest text-(--text-faint) px-2 pb-1.25 font-semibold">
@@ -297,7 +297,7 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      <div className="flex flex-col gap-2 border-t border-border pt-3">
+      <div className="flex flex-col gap-2 border-t border-border pt-3 shrink-0">
         {user && (
           <div className="flex items-center gap-2.5 px-2.5 py-2.5">
             <div className="w-7.5 h-7.5 rounded-full bg-(--accent-soft) border border-(--accent-bdr) flex items-center justify-center text-[11px] font-bold text-(--accent-b)">
@@ -318,10 +318,6 @@ export default function Sidebar() {
           {ICONS.logout}
           <span>Log out</span>
         </button>
-        {/* <div className="flex items-center gap-2 text-[11px] text-[var(--text-faint)] px-[10px] pb-1 [font-family:var(--font-m)]">
-          <span className="w-[6px] h-[6px] rounded-full bg-[var(--success)] shadow-[0_0_0_3px_var(--success-soft)]" />
-          API connected
-        </div> */}
       </div>
     </aside>
   );
