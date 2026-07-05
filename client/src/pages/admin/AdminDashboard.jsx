@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { refService } from "../../services/api";
 import Loader from "../../components/Loader";
+import DashboardShell from "../../components/DashboardShell";
 
 export default function AdminDashboard() {
   const [counts, setCounts] = useState(null);
