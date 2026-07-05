@@ -7,6 +7,9 @@ import { fmt, isBlank, toNum } from '../../utils/helpers';
 import { usePagination } from '../../hooks/usePagination';
 import Pagination from '../../components/Pagination';
 
+const ROOM_OPTIONS = ['A', 'B', 'C', 'D'];
+const randomRoom = () => ROOM_OPTIONS[Math.floor(Math.random() * ROOM_OPTIONS.length)];
+
 export default function PatientAppointments() {
   const { user } = useAuth();
   const isPatient = user.role === 'patient';
@@ -46,13 +49,13 @@ export default function PatientAppointments() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isBlank(form.Physician) || isBlank(form.Starto) || isBlank(form.Endo) || isBlank(form.ExaminationRoom)) {
+    if (isBlank(form.Physician) || isBlank(form.Starto) || isBlank(form.Endo)) {
       setStatus({ state: 'error', msg: 'All fields are required.' }); return;
     }
     setStatus({ state: 'loading', msg: '' });
     try {
       if (editTarget) {
-        await patientService.editAppointment(editTarget, { ...form, Physician: toNum(form.Physician) });
+        await patientService.editAppointment(editTarget, { ...form, Physician: toNum(form.Physician), ExaminationRoom: form.ExaminationRoom || randomRoom() });
         setStatus({ state: 'success', msg: 'Appointment updated.' });
         setEditTarget(null);
       } else {
@@ -63,7 +66,7 @@ export default function PatientAppointments() {
           Physician: toNum(form.Physician),
           Starto: form.Starto.replace('T', ' '),
           Endo: form.Endo.replace('T', ' '),
-          ExaminationRoom: form.ExaminationRoom,
+          ExaminationRoom: randomRoom(),
           VisitType: form.VisitType,
         });
         setStatus({ state: 'success', msg: 'Appointment booked!' });
@@ -105,7 +108,6 @@ export default function PatientAppointments() {
               </div>
               <div className="field"><label>Start time</label><input type="datetime-local" value={form.Starto} onChange={set('Starto')}/></div>
               <div className="field"><label>End time</label><input type="datetime-local" value={form.Endo} onChange={set('Endo')}/></div>
-              <div className="field"><label>Examination Room</label><input placeholder="e.g. A" value={form.ExaminationRoom} onChange={set('ExaminationRoom')}/></div>
               <div className="field">
                 <label>Visit type</label>
                 <select value={form.VisitType} onChange={set('VisitType')}>

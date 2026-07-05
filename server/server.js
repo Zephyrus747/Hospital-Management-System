@@ -197,9 +197,9 @@ function createApp(dbFile = path.join(__dirname, "db.json")) {
   // POST /api/appointment/
   // ---------------------------------------------------------------------
   server.post("/api/appointment/", (req, res) => {
-    const { AppointmentID, Patient, Physician, Starto, Endo, ExaminationRoom } =
+    const { AppointmentID, Patient, Physician, Starto, Endo, ExaminationRoom, VisitType } =
       req.body || {};
-    const PrepNurse =
+    let PrepNurse =
       req.body && Object.prototype.hasOwnProperty.call(req.body, "PrepNurse")
         ? req.body.PrepNurse
         : null;
@@ -228,6 +228,16 @@ function createApp(dbFile = path.join(__dirname, "db.json")) {
         "Appointment with this AppointmentID already exists",
       );
     }
+    // Auto-assign a prep nurse at random from the nurses currently in the DB
+    // whenever the caller doesn't explicitly supply one. Reading straight from
+    // db.json means a nurse added moments ago is immediately eligible.
+    if (PrepNurse === null || PrepNurse === undefined) {
+      const nurses = db.get("nurses").value();
+      if (nurses && nurses.length) {
+        PrepNurse =
+          nurses[Math.floor(Math.random() * nurses.length)].EmployeeID;
+      }
+    }
     db.get("appointments")
       .push({
         AppointmentID,
@@ -237,6 +247,7 @@ function createApp(dbFile = path.join(__dirname, "db.json")) {
         Starto,
         Endo,
         ExaminationRoom,
+        VisitType: VisitType || "OPD",
       })
       .write();
     return res.status(201).json({ message: "Record Created Successfully" });
