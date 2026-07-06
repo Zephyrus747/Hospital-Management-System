@@ -1270,11 +1270,11 @@ export default function Landing() {
           }}
         >
           {[
-            ["X", "Accredited"],
-            ["Y", "Certified"],
-            ["Z", "Approved"],
-            ["XYZ", "Certified"],
-            ["ABC", "Compliant"],
+            ["ISO 9001", "Accredited"],
+            ["ISO 14001", "Certified"],
+            ["ISO 27001", "Approved"],
+            ["ISO 45001", "Certified"],
+            ["ISO 22000", "Compliant"],
           ].map(([badge, sub]) => (
             <div
               key={badge}
